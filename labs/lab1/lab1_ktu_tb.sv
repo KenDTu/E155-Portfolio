@@ -13,7 +13,7 @@ module lab1_ktu_tb();
 	logic [2:0] led; // output from logic
 	logic [6:0] seg; // output the segments of a common-anode 7-segment display
 	
-	// Instantiate the lab1_ktu DUT for testing
+	// Instantiate the lab1_ktu DUT for testing 
     lab1_ktu lab1_ktu(
         .s(s),
         .reset(reset),

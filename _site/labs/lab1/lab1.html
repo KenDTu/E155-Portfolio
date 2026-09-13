@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 1: FPheerog – E155 Portfolio</title>
+<title>Lab 1: FPGA, MCU Setup and Testing – E155 Portfolio</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -205,7 +205,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 1: FPheerog</h1>
+<h1 class="title">Lab 1: FPGA, MCU Setup and Testing</h1>
 </div>
 
 
@@ -225,39 +225,84 @@ window.Quarto = {
 <!-- This is how you write a comment in your .qmd file -->
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In this lab, a design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz.</p>
+<p>In this lab, the E155 Microprocessor PCB was soldered with the UPduino v3.1 FPGA, an STM Nucleo-L432KC MCU board, and various switches, SMT resistors, LEDS, and other electronic components. A design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs, a simple XOR and AND combinational logic to light up two other on-board LEDs, and logic control signal from a 4 bit representation DIP switch to toggle an off-board seven segment LED to represent a single hexademical digit. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz.</p>
 </section>
 <section id="design-and-testing-methodology" class="level2">
 <h2 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h2>
-<p>The on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that the blinking frequency could be easily visualized using one of the on-board LEDs.</p>
-<p>The design was developed using a simple clock divider module which drives the external LED.</p>
+<p>The on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that the blinking frequency could be easily visualized using one of the on-board LEDs. Counter is a variable with a width of 24 bits. Therefore when selecting the bit to represent the LED we can set the 2.4Hz blinking LED to be the most significant 24th bit as this will be on. The <span class="math display">\[target frequency = input frequency / division factor \]</span> Therefore as the target frequency is 2.4Hz and the input frequency is 24MHz, we require the division factor to close to 10,000,000. We can roughly achieve this by selecting the 24th bit to be a 1 because <span class="math display">\[2^{23} = 8,388,608 \implies target frequency = \frac{2.4MHz}{8,388,608} \approx 2.4Hz\]</span></p>
+<p>The DIP switch was used to drive an XOR and AND function to light two other LEDs by assigning two sets of to different bits which were encoding in the DIP switch. A testbench with the 4 different outcomes for each output was created.</p>
+<p>As for the seven segment LED, it has seven individual LEDs which each need to be driven by a +3.3V common anode – produced by the FPGA – and connected to a pin on the FPGA. Similarly a testbench with all 16 single digit hexadecimal representation outputs was run.</p>
+<p>I use the industry standard Radiant Software to set up my SystemVerilog files to write the hardware for the FPGA and complete pin assignment to the 3 on-board LEDs and off-board seven segment LEDs. Once the files synthesized, a .bin file was created in my project folder directory.</p>
+<p>Next I used the openFPGA to upload my program to the FPGA. In my local terminal, I input the commandline <code>openFPGALoader -b ice40_generic -c ft232  -f &lt;/path/to/bin_filename.bin&gt;</code> to program my FPGA. For this project, I also had to short my UPduino and +5V in located on J3 of the PCB in order to provide power to the board.</p>
 </section>
 <section id="technical-documentation" class="level2">
 <h2 class="anchored" data-anchor-id="technical-documentation">Technical Documentation</h2>
-<p>The source code for the project can be found in the associated Github repository.</p>
-<p>[picture]</p>
-<p>The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module top includes two submodules: the high-speed oscillator block (HSOSC) and the clock divider module (clk_divider). Every net and port in the block diagram must be labeled – that means each wire at the top level has to have a name, and the connection to a submodule must show the name inside the module. This is true even if the submodule port name is the same as the top level net name.</p>
+<p>The source code for the project can be found in the associated <a href="https://github.com/KenDTu/E155-Portfolio">Github repository</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/blockdiagram.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: Block diagram for the synthesis of the top module</figcaption>
+</figure>
+</div>
+<p>The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module top includes three submodules: the high-speed oscillator block (HSOSC), the counter module (which acts as a clock divider), and the seven segment module.</p>
 </section>
 <section id="schematic" class="level2">
 <h2 class="anchored" data-anchor-id="schematic">Schematic</h2>
-<p>[picture]</p>
-<p>Figure 2 shows the physical layout of the design. An internal 100 kΩ pullup resistor was used to ensure the active low reset pin was not floating. The output LED was connected using a 1 kΩ current-limiting resistor to ensure the output current (~2.6 mA) did not exceed the maximum output current of the FPGA I/O pi</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/schematic.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: Schematic diagram for the physical layout</figcaption>
+</figure>
+</div>
+<p>Figure 2 shows the physical layout of the design. An internal 100 kΩ pullup resistor was used to ensure the active low reset pin was not floating for the LEDs. The each output LED connecting to the seven segment was connected using a 220 Ω current-limiting resistor to ensure the output current</p>
+<p><span class="math display">\[I = \frac{3.3V}{220Ω} = 15mA \]</span></p>
+<p>did not exceed the maximum output current of the FPGA I/O RBG pins which is 24mA.</p>
 </section>
 <section id="results-and-discussion" class="level2">
 <h2 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h2>
-<p>The design met all intended design objectives. Figure 3 shows a screenshot of the QuestaSim simulation. If a more precise output frequency was desired, a more sophisticated counter could be developed. The current design only allows for the clock to be divided by powers of two.</p>
+<p>The design most of the intended design objectives. Figure 3 shows a screenshot of the seven segment LED showing an 8 when the bit representation 00001000 is triggered on the DIP switch.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sevenseg.jpeg" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Seven segment LED displaying 8 as hexademical representation when the DIP switch is turned on</figcaption>
+</figure>
+</div>
+<p>If a more precise output frequency was desired, a more sophisticated counter could be developed. The current frequency of oscillation is actually closer to 2.8Hz rather than the 2.4Hz desired. The current design only allows for the clock to be divided by powers of two. Testing the reset button on the hardware also demonstrates that it functions as the LED does not blink when my assigned reset switch is pressed.</p>
 <section id="testbench-simulation" class="level3">
 <h3 class="anchored" data-anchor-id="testbench-simulation">Testbench Simulation</h3>
-<p>The design met all the specification…</p>
+<p>The design met the specifications for the seven segment, the counter, and the on-board LED logic.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/simulation.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment</figcaption>
+</figure>
+</div>
+<p>A few shortcomings of this project are not including the test cases for the counter reaching its max value and verification of internal signals for the top module. Other excellent specifications could be met such as verifying the reset, enable, and other top module behaviour such as the HSOSC and the connections. These I did not have enough time to work on given the many logisitical challenges I had with this project.</p>
 </section>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>The design successfully …</p>
+<p>The design successfully produces SystemVerilog files and project synthesis to verify logic controls to two LEDs, a blinking LED with a clock divider, and a seven segment LED to represent the hexadecimal representation of 8 bit signal from a DIP switch. In total I spent 50 hours on this lab in one week.</p>
 </section>
 <section id="ai-prototype-summary" class="level2">
 <h2 class="anchored" data-anchor-id="ai-prototype-summary">AI Prototype Summary</h2>
-<p>Did not work well at all include the code.</p>
+<p>For this lab, students were tasked to see if “can my LLMs of choice generate SystemVerilog that compiles, synthesizes and exhibits correct behavior?” We were told to prompt our favorite LLM</p>
+<p>“Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg.”</p>
+<p>Figures 5 and 6 demonstrate the output when the SystemVerilog code was synthesized.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ai1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: Radiant Software demonstrates that the files did not compile and fails</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/ai2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation</figcaption>
+</figure>
+</div>
+<p>From the code generation, I conclude that the output is not the most accurate. There are newly constructed syntax such as this <code>localparan int unsigned</code> which I have never come across before. During the first synthesis, the errors were that the code generated was trying to use a module that did not exist the first time around or was not include. In the next iteration, the module was able to be instantiated.</p>
+<p>With these results, I would not trust Claude LLM to generate me code but perhaps would use it to spot errors in my code or file hierachy..</p>
 
 
 
