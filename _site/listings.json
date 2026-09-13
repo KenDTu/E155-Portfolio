@@ -1,14 +1,22 @@
 [
   {
-    "listing": "/posts/blogs.html",
-    "items": []
-  },
-  {
-    "listing": "/posts/blog.html",
-    "items": []
-  },
-  {
     "listing": "/blog.html",
+    "items": [
+      "/posts/first-post.html"
+    ]
+  },
+  {
+    "listing": "/labs/lab1/lab1.html",
     "items": []
+  },
+  {
+    "listing": "/lab.html",
+    "items": []
+  },
+  {
+    "listing": "/resources.html",
+    "items": [
+      "/posts/first-post.html"
+    ]
   }
 ]

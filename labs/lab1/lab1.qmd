@@ -1,0 +1,12 @@
+---
+title: "Lab 1: FPheerog"
+listing:
+  contents: lab.qmd
+  sort: "date desc"
+  type: default
+  categories: false
+---
+
+<!-- This is how you write a comment in your .qmd file -->
+## This is how to write a subheading
+
