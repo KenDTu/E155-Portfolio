@@ -1,12 +1,49 @@
 ---
 title: "Lab 1: FPheerog"
 listing:
-  contents: lab.qmd
+  contents: lab1.qmd
   sort: "date desc"
   type: default
   categories: false
 ---
 
 <!-- This is how you write a comment in your .qmd file -->
-## This is how to write a subheading
+## Introduction
 
+In this lab, a design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz.
+
+
+## Design and Testing Methodology
+
+The on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that the blinking frequency could be easily visualized using one of the on-board LEDs.
+
+The design was developed using a simple clock divider module which drives the external LED.
+
+## Technical Documentation
+
+The source code for the project can be found in the associated Github repository.
+
+[picture]
+
+The block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module top includes two submodules: the high-speed oscillator block (HSOSC) and the clock divider module (clk_divider). Every net and port in the block diagram must be labeled – that means each wire at the top level has to have a name, and the connection to a submodule must show the name inside the module. This is true even if the submodule port name is the same as the top level net name.
+
+## Schematic
+[picture]
+
+Figure 2 shows the physical layout of the design. An internal 100 kΩ pullup resistor was used to ensure the active low reset pin was not floating. The output LED was connected using a 1 kΩ current-limiting resistor to ensure the output current (~2.6 mA) did not exceed the maximum output current of the FPGA I/O pi
+
+## Results and Discussion
+
+The design met all intended design objectives. Figure 3 shows a screenshot of the QuestaSim simulation. If a more precise output frequency was desired, a more sophisticated counter could be developed. The current design only allows for the clock to be divided by powers of two.
+
+### Testbench Simulation
+
+The design met all the specification...
+
+## Conclusion
+
+The design successfully ...
+
+## AI Prototype Summary
+
+Did not work well at all include the code.

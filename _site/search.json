@@ -14,18 +14,60 @@
     "text": "Ken Tu is an engineering student at Harvey Mudd College with a humanities concentration in Foreign Languages (Chinese & Arabic). His professional interests are embedded systems engineering and consulting. Ken previously served as Co-Head Sponsor of APISPAM from 2025-2026 and plays number 6 flanker for the Claremont Rugby Club. In his free time, Ken loves to read fiction novels and watch satirical British drama."
   },
   {
+    "objectID": "labs/lab1/lab1.html",
+    "href": "labs/lab1/lab1.html",
+    "title": "Lab 1: FPheerog",
+    "section": "",
+    "text": "In this lab, a design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#introduction",
+    "href": "labs/lab1/lab1.html#introduction",
+    "title": "Lab 1: FPheerog",
+    "section": "",
+    "text": "In this lab, a design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#design-and-testing-methodology",
+    "href": "labs/lab1/lab1.html#design-and-testing-methodology",
+    "title": "Lab 1: FPheerog",
+    "section": "Design and Testing Methodology",
+    "text": "Design and Testing Methodology\nThe on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that the blinking frequency could be easily visualized using one of the on-board LEDs.\nThe design was developed using a simple clock divider module which drives the external LED."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#technical-documentation",
+    "href": "labs/lab1/lab1.html#technical-documentation",
+    "title": "Lab 1: FPheerog",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\nThe source code for the project can be found in the associated Github repository.\n[picture]\nThe block diagram in Figure 1 demonstrates the overall architecture of the design. The top-level module top includes two submodules: the high-speed oscillator block (HSOSC) and the clock divider module (clk_divider). Every net and port in the block diagram must be labeled – that means each wire at the top level has to have a name, and the connection to a submodule must show the name inside the module. This is true even if the submodule port name is the same as the top level net name."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#schematic",
+    "href": "labs/lab1/lab1.html#schematic",
+    "title": "Lab 1: FPheerog",
+    "section": "Schematic",
+    "text": "Schematic\n[picture]\nFigure 2 shows the physical layout of the design. An internal 100 kΩ pullup resistor was used to ensure the active low reset pin was not floating. The output LED was connected using a 1 kΩ current-limiting resistor to ensure the output current (~2.6 mA) did not exceed the maximum output current of the FPGA I/O pi"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#results-and-discussion",
+    "href": "labs/lab1/lab1.html#results-and-discussion",
+    "title": "Lab 1: FPheerog",
+    "section": "Results and Discussion",
+    "text": "Results and Discussion\nThe design met all intended design objectives. Figure 3 shows a screenshot of the QuestaSim simulation. If a more precise output frequency was desired, a more sophisticated counter could be developed. The current design only allows for the clock to be divided by powers of two.\n\nTestbench Simulation\nThe design met all the specification…"
+  },
+  {
     "objectID": "lab.html",
     "href": "lab.html",
     "title": "Labs",
     "section": "",
-    "text": "This was a strong learning experience."
+    "text": "For more details, check out Lab 1."
   },
   {
     "objectID": "lab.html#lab-1-fpga-and-mcu-setup-and-testing",
     "href": "lab.html#lab-1-fpga-and-mcu-setup-and-testing",
     "title": "Labs",
     "section": "",
-    "text": "This was a strong learning experience."
+    "text": "For more details, check out Lab 1."
   },
   {
     "objectID": "lab.html#lab-2",
@@ -68,5 +110,19 @@
     "title": "Resources",
     "section": "",
     "text": "Here is a link to the E155 course website.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 1\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#conclusion",
+    "href": "labs/lab1/lab1.html#conclusion",
+    "title": "Lab 1: FPheerog",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe design successfully …"
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#ai-prototype-summary",
+    "href": "labs/lab1/lab1.html#ai-prototype-summary",
+    "title": "Lab 1: FPheerog",
+    "section": "AI Prototype Summary",
+    "text": "AI Prototype Summary\nDid not work well at all include the code."
   }
 ]

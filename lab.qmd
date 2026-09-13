@@ -9,7 +9,7 @@ listing:
 
 ## Lab 1 | FPGA and MCU Setup and Testing
 
-This was a strong learning experience.
+For more details, check out [Lab 1](labs/lab1/lab1.qmd).
 
 ## Lab 2
 
