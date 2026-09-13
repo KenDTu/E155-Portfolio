@@ -6,8 +6,7 @@
 // “does the HSOSC work?” 
 // and “does the assign 1 liner work?”.
 
-`timescale 1 ns/1 ps //what does this scale mean?
-
+`timescale 1 ns/1 ps
 module lab1_ktu_tb();
 	logic clk, reset; // system clock, active high reset
 	logic [3:0] s; // input switches
