@@ -56,6 +56,20 @@
     "text": "Results and Discussion\nThe design most of the intended design objectives. Figure 3 shows a screenshot of the seven segment LED showing an 8 when the bit representation 00001000 is triggered on the DIP switch.\n\n\n\nFigure 3: Seven segment LED displaying 8 as hexademical representation when the DIP switch is turned on\n\n\nIf a more precise output frequency was desired, a more sophisticated counter could be developed. The current frequency of oscillation is actually closer to 2.8Hz rather than the 2.4Hz desired. The current design only allows for the clock to be divided by powers of two. Testing the reset button on the hardware also demonstrates that it functions as the LED does not blink when my assigned reset switch is pressed.\n\nTestbench Simulation\nThe design met the specifications for the seven segment, the counter, and the on-board LED logic.\n\n\n\nFigure 4: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment\n\n\nA few shortcomings of this project are not including the test cases for the counter reaching its max value and verification of internal signals for the top module. Other excellent specifications could be met such as verifying the reset, enable, and other top module behaviour such as the HSOSC and the connections. These I did not have enough time to work on given the many logisitical challenges I had with this project."
   },
   {
+    "objectID": "labs/lab1/lab1.html#conclusion",
+    "href": "labs/lab1/lab1.html#conclusion",
+    "title": "Lab 1: FPGA, MCU Setup and Testing",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe design successfully produces SystemVerilog files and project synthesis to verify logic controls to two LEDs, a blinking LED with a clock divider, and a seven segment LED to represent the hexadecimal representation of 8 bit signal from a DIP switch. In total I spent 50 hours on this lab in one week."
+  },
+  {
+    "objectID": "labs/lab1/lab1.html#ai-prototype-summary",
+    "href": "labs/lab1/lab1.html#ai-prototype-summary",
+    "title": "Lab 1: FPGA, MCU Setup and Testing",
+    "section": "AI Prototype Summary",
+    "text": "AI Prototype Summary\nFor this lab, students were tasked to see if “can my LLMs of choice generate SystemVerilog that compiles, synthesizes and exhibits correct behavior?” We were told to prompt our favorite LLM\n“Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg.”\nFigures 5 and 6 demonstrate the output when the SystemVerilog code was synthesized.\n\n\n\nFigure 5: Radiant Software demonstrates that the files did not compile and fails\n\n\n\n\n\nFigure 6: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation\n\n\nFrom the code generation, I conclude that the output is not the most accurate. There are newly constructed syntax such as this localparan int unsigned which I have never come across before. During the first synthesis, the errors were that the code generated was trying to use a module that did not exist the first time around or was not include. In the next iteration, the module was able to be instantiated.\nWith these results, I would not trust Claude LLM to generate me code but perhaps would use it to spot errors in my code or file hierachy."
+  },
+  {
     "objectID": "lab.html",
     "href": "lab.html",
     "title": "Labs",
@@ -110,19 +124,5 @@
     "title": "Resources",
     "section": "",
     "text": "Here is a link to the E155 course website.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 1\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "labs/lab1/lab1.html#conclusion",
-    "href": "labs/lab1/lab1.html#conclusion",
-    "title": "Lab 1: FPGA, MCU Setup and Testing",
-    "section": "Conclusion",
-    "text": "Conclusion\nThe design successfully produces SystemVerilog files and project synthesis to verify logic controls to two LEDs, a blinking LED with a clock divider, and a seven segment LED to represent the hexadecimal representation of 8 bit signal from a DIP switch. In total I spent 50 hours on this lab in one week."
-  },
-  {
-    "objectID": "labs/lab1/lab1.html#ai-prototype-summary",
-    "href": "labs/lab1/lab1.html#ai-prototype-summary",
-    "title": "Lab 1: FPGA, MCU Setup and Testing",
-    "section": "AI Prototype Summary",
-    "text": "AI Prototype Summary\nFor this lab, students were tasked to see if “can my LLMs of choice generate SystemVerilog that compiles, synthesizes and exhibits correct behavior?” We were told to prompt our favorite LLM\n“Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg.”\nFigures 5 and 6 demonstrate the output when the SystemVerilog code was synthesized.\n\n\n\nFigure 5: Radiant Software demonstrates that the files did not compile and fails\n\n\n\n\n\nFigure 6: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation\n\n\nFrom the code generation, I conclude that the output is not the most accurate. There are newly constructed syntax such as this localparan int unsigned which I have never come across before. During the first synthesis, the errors were that the code generated was trying to use a module that did not exist the first time around or was not include. In the next iteration, the module was able to be instantiated.\nWith these results, I would not trust Claude LLM to generate me code but perhaps would use it to spot errors in my code or file hierachy."
   }
 ]
