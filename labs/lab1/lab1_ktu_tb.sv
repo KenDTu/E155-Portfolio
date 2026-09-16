@@ -30,37 +30,40 @@ module lab1_ktu_tb();
 	
 	initial begin
 
-    //  ========== TESTING COUNTER ==========
-        // E R
-        // 0 0
-        // 1 0 
-        // 0 1
-        // 1 1
+      ========== TESTING COUNTER ==========
+         E R
+         0 0
+         1 0 
+         0 1
+         1 1
 
         rest = 0, enable = 0;
         #10 
-        assert (led[0] == 1'b0)       // check outputs
+        assert (led[2] == 1'b0)       // check outputs
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else 
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         rest = 1, enable = 0;
         #10 
-        assert (led[0] == 1'b0)       // check outputs
+        assert (led[2] == 1'b0)       // check outputs
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else 
+			 $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         rest = 0, enable = 1;
         #10 
-        assert (led[0] == 1'b0)       // check outputs
+        assert (led[2] == 1'b0)       // check outputs
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else 
+			 $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         rest = 1, enable = 1;
         #10 
-        assert (led[0] == 1'b0)       // check outputs
+        assert (led[2] == 1'b0)       // check outputs
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else 
+			 $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 			
 
 		
