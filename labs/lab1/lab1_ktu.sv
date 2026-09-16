@@ -6,6 +6,7 @@
 module lab1_ktu(
 		input logic [3:0] s,     // the four DIP switches (on the board, SW6)
 		input logic reset, // switch for reset on the board
+		input logic enable, // switch for enable on the board
 		output logic [2:0] led,   // 3 LEDs (you may use the on-board LEDs)
 		output logic [6:0] seg   // the segments of a common-anode 7-segment display
 );
@@ -21,7 +22,7 @@ module lab1_ktu(
 	sevenseg sevensegData(.s(s), .segments(seg));
 
 	// Instantiating Counter to oscillate led 3
-	counter counter1(.int_osc(int_osc), .reset(reset), .ledLast(led[2]));
+	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .ledLast(led[2]));
 
     //  Assign LED output
 	assign led[0] = s[1] ^ s[0];

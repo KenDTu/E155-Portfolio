@@ -8,7 +8,7 @@
 
 `timescale 1 ns/1 ps
 module lab1_ktu_tb();
-	logic clk, reset; // system clock, active high reset
+	logic clk, reset, enable; // system clock, active high reset, active ? enable
 	logic [3:0] s; // input switches
 	logic [2:0] led; // output from logic
 	logic [6:0] seg; // output the segments of a common-anode 7-segment display
@@ -17,6 +17,7 @@ module lab1_ktu_tb();
     lab1_ktu lab1_ktu(
         .s(s),
         .reset(reset),
+        .enable(enable),
 		.led(led),
         .seg(seg)
     );
@@ -28,6 +29,40 @@ module lab1_ktu_tb();
 		end
 	
 	initial begin
+
+    //  ========== TESTING COUNTER ==========
+        // E R
+        // 0 0
+        // 1 0 
+        // 0 1
+        // 1 1
+
+        rest = 0, enable = 0;
+        #10 
+        assert (led[0] == 1'b0)       // check outputs
+            $display("PASSED! The counter behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
+
+        rest = 1, enable = 0;
+        #10 
+        assert (led[0] == 1'b0)       // check outputs
+            $display("PASSED! The counter behaves as desired at time: %0t.", $time);
+        else 
+
+        rest = 0, enable = 1;
+        #10 
+        assert (led[0] == 1'b0)       // check outputs
+            $display("PASSED! The counter behaves as desired at time: %0t.", $time);
+        else 
+
+        rest = 1, enable = 1;
+        #10 
+        assert (led[0] == 1'b0)       // check outputs
+            $display("PASSED! The counter behaves as desired at time: %0t.", $time);
+        else 
+			
+
 		
 	//  ========== TESTING TOP LEVEL LOGIC ==========
 	// test xor 1
