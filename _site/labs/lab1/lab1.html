@@ -350,7 +350,28 @@ endmodule
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/simulation.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 4: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment</figcaption>
+<figcaption>Figure 4: QuestSim simulation square wave form</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Figure 5: Testbench
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/test.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment as well as the cases for the counter and enable functionality</figcaption>
 </figure>
 </div>
 </div>
@@ -367,35 +388,14 @@ endmodule
 <h2 class="anchored" data-anchor-id="ai-prototype-summary">AI Prototype Summary</h2>
 <p>For this lab, students were tasked to see if “can my LLMs of choice generate SystemVerilog that compiles, synthesizes and exhibits correct behavior?” We were told to prompt our favorite LLM</p>
 <p>“Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg.”</p>
-<p>Figures 5 and 6 demonstrate the output when the SystemVerilog code was synthesized.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Figure 5: LLM’s first file compilation attempt
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/ai1.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 5: Radiant Software demonstrates that the files did not compile and fails</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
+<p>Figures 6 and 7 demonstrate the output when the SystemVerilog code was synthesized.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Figure 6: Recomplation for correction
+<span class="screen-reader-only">Note</span>Figure 6: LLM’s first file compilation attempt
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -403,8 +403,29 @@ endmodule
 <div class="callout-body-container callout-body">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
+<p><img src="images/ai1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Radiant Software demonstrates that the files did not compile and fails</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Figure 7: Recomplation for correction
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="images/ai2.png" class="img-fluid figure-img"></p>
-<figcaption>Figure 6: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation</figcaption>
+<figcaption>Figure 7: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation</figcaption>
 </figure>
 </div>
 </div>

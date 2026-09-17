@@ -93,14 +93,20 @@ The design met the specifications for the seven segment, the counter, and the on
 
 ::: {.callout-note collapse="true"}
 ## Figure 4: QuestSim Simulation
-![Figure 4: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment](images/simulation.png)
+![Figure 4: QuestSim simulation square wave form](images/simulation.png)
 :::
+
+::: {.callout-note collapse="true"}
+## Figure 5: Testbench
+![Figure 5: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment as well as the cases for the counter and enable functionality](images/test.png)
+:::
+
 
 A few shortcomings of this project are not including the test cases for the counter reaching its max value and verification of internal signals for the top module. Other excellent specifications could be met such as verifying the reset, enable, and other top module behaviour such as the HSOSC and the connections. These I did not have enough time to work on given the many logisitical challenges I had with this project. 
 
 ## Conclusion
 
-The design successfully produces SystemVerilog files and project synthesis to verify logic controls to two LEDs, a blinking LED with a clock divider, and a seven segment LED to represent the hexadecimal representation of 8 bit signal from a DIP switch. In total I spent 50 hours on this lab in one week.
+The design successfully produces SystemVerilog files and project synthesis to verify logic controls to two LEDs, a blinking LED with a clock divider, and a seven segment LED to represent the hexadecimal representation of 8 bit signal from a DIP switch. In total I spent 65 hours on this lab in one week.
 
 ## AI Prototype Summary
 
@@ -108,16 +114,16 @@ For this lab, students were tasked to see if “can my LLMs of choice generate S
 
 "Write SystemVerilog HDL to leverage the internal high speed oscillator in the Lattice UP5K FPGA and blink an LED at 2 Hz. Take full advantage of SystemVerilog syntax, for example, using logic instead of wire and reg."
 
-Figures 5 and 6 demonstrate the output when the SystemVerilog code was synthesized. 
+Figures 6 and 7 demonstrate the output when the SystemVerilog code was synthesized. 
 
 ::: {.callout-note collapse="true"}
-## Figure 5: LLM's first file compilation attempt
-![Figure 5: Radiant Software demonstrates that the files did not compile and fails](images/ai1.png)
+## Figure 6: LLM's first file compilation attempt
+![Figure 6: Radiant Software demonstrates that the files did not compile and fails](images/ai1.png)
 :::
 
 ::: {.callout-note collapse="true"}
-## Figure 6: Recomplation for correction
-![Figure 6: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation](images/ai2.png)
+## Figure 7: Recomplation for correction
+![Figure 7: Recomplication after the LLM was prompted to correct itself. SystemVerilog code included. Still led to a failed simulation](images/ai2.png)
 :::
 
 
