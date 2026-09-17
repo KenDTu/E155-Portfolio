@@ -1,0 +1,32 @@
+---
+title: "Labs"
+listing:
+  contents: labs/lab1.qmd
+  sort: "date desc"
+  type: default
+  categories: false
+---
+
+## Lab 1 | FPGA and MCU Setup and Testing
+
+For more details, check out [Lab 1](labs/lab1/lab1.qmd).
+
+## Lab 2
+
+This was a strong learning experience.
+
+## Lab 3
+
+This was a strong learning experience.
+
+## Lab 4
+
+This was a strong learning experience.
+
+## Lab 5
+
+This was a strong learning experience.
+
+## Lab 6
+
+This was a strong learning experience.

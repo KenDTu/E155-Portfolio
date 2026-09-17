@@ -1,0 +1,11 @@
+---
+title: "Lab 1"
+description: THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! 
+author: "Ken Tu"
+date: "09/12/2026"
+categories:
+  - reflection
+  - labreport
+draft: false
+---
+

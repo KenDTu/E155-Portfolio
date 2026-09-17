@@ -1,0 +1,15 @@
+---
+title: "E155 Portfolio"
+image: images/headshot.jpeg
+about:
+    template: jolla
+    links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/kendtu/
+    - icon: github
+      text: Github
+      href: https://github.com/KenDTu
+---
+
+Ken Tu is an engineering student at Harvey Mudd College with a humanities concentration in Foreign Languages (Chinese & Arabic). His professional interests are embedded systems engineering and consulting. Ken previously served as Co-Head Sponsor of APISPAM from 2025-2026 and plays number 6 flanker for the Claremont Rugby Club. In his free time, Ken loves to read fiction novels and watch satirical British drama.

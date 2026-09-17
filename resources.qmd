@@ -1,0 +1,11 @@
+---
+title: "Resources"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: false
+---
+
+Here is a link to the [E155 course website](https://hmc-e155.github.io/).
+
