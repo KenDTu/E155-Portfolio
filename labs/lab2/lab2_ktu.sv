@@ -42,9 +42,8 @@ module lab2_ktu(
 	sevenseg sevensegData(.s(s), .segments(seg));
 
 	// Instantiating Counter to oscillate the l
-	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .ledLast(led[2]));
+	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .leftHex(.leftHex), .ledLast(led[2]));
 	
-	assign leftHex = led[2]; // this is the on or off for the power for the side of the seven seg
 	assign rightHex = ~leftHex; // if rightHex is on then leftHex should be off
 	
 	// TODO: pin assignments according to lab 2.

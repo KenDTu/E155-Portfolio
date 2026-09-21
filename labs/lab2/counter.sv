@@ -3,10 +3,13 @@
 // Date of Creation: 09/20/2026
 // Counter divider to divide the 24MHz int_osc
 
-module counter #(parameter counterWidth = 24, parameter max = 24000000) // TODO: adjust the counterWidth and max to have correct clock divider
+// counterWidth = 2^19 = 524,288 ≥ 400,000
+// clock math is 24MHz / 400,000 = 60Hz
+module counter #(parameter counterWidth = 19, parameter max = 399,999) // TODO: adjust the counterWidth and max to have correct clock divider
 				 (input logic      int_osc,
 				  input logic      reset,
 				  input logic      enable,
+				  output logic     leftHex,
 			      output logic     ledLast
 );
 	logic [counterWidth-1:0] counter;
@@ -21,5 +24,8 @@ module counter #(parameter counterWidth = 24, parameter max = 24000000) // TODO:
 
 	// output of the last led light from the counter
 	assign ledLast = counter[23];
+
+	// output of the leftHex to be on or off using logical assignment
+	assign leftHex = (count > max/2);
 
 endmodule
