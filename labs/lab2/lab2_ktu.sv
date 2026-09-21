@@ -3,6 +3,23 @@
 // Date of Creation: 09/20/2026
 // Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
 
+/* ======= PIN ASSIGNMENTS ==========
+leftHex = P46
+rightHex = P45
+
+LEFT SEGEMENT SWTICH
+switchLeft[3], switchLeft[2], switchLeft[1], switchLeft[0]
+P32, P35, P31, P37
+
+RIGHT SEGEMENT SWITCH
+switchRight[3], switchRight[2], switchRight[1], switchRight[0]
+P4, P48, P47, P2
+
+OUTPUT SEG
+seg[6], seg[5], seg[4], seg[3], seg[2], seg[1], seg[0]
+see iPad
+*/
+
 module lab2_ktu(
 		input logic [3:0] switchLeft, // the four DIP switches (on the board, SW6)
 		input logic [3:0] switchRight, // the off board DIP switch
@@ -24,7 +41,7 @@ module lab2_ktu(
 	// Instantiating Seven Segement displayer decoder
 	sevenseg sevensegData(.s(s), .segments(seg));
 
-	// Instantiating Counter to oscillate led 3
+	// Instantiating Counter to oscillate the l
 	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .ledLast(led[2]));
 	
 	assign leftHex = led[2]; // this is the on or off for the power for the side of the seven seg
