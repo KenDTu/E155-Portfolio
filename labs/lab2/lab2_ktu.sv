@@ -42,7 +42,8 @@ module lab2_ktu #(parameter max = 499999)
 	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .counter(counter));
 	sevenseg sevensegData(.s(s), .segments(seg));
 	
-	assign leftHex = (counter > max/2);
+	// assign leftHex = (counter > max/2);
+	assign leftHex = counter[19];
 	assign rightHex = ~leftHex; // if rightHex is on then leftHex should be off
 	
 	assign s = leftHex ? switchLeft : switchRight;
@@ -53,5 +54,5 @@ module lab2_ktu #(parameter max = 499999)
     //  Assign LED output
 	assign led[0] = switchLeft[1] ^ switchLeft[0];
 	assign led[1] = switchLeft[3] && switchLeft[2];
-	assign led[2] = counter[19];
+	assign led[2] = counter[0];
 endmodule
