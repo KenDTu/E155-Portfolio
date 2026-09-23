@@ -39,7 +39,7 @@ module lab2_ktu #(parameter max = 249999)
 		hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
 	
 	// Instantiating Counter to oscillate the l
-	counter counter1(.int_osc(int_osc), .reset(reset), .enable(enable), .counter(counter));
+	counter counter1(.clk(int_osc), .reset(reset), .enable(enable), .counter(counter));
 	sevenseg sevensegData(.s(s), .segments(seg));
 	
 	// assign leftHex = (counter > max/2);
