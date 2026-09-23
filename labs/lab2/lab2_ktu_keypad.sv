@@ -29,8 +29,7 @@ module lab2_ktu #(parameter max = 249999)
 		output logic [6:0] seg,   // the segments of a common-anode 7-segment display
 		output leftHex, // to toggle the left seven segment power
 		output rightHex, // to toggle the right seven segment power
-		output logic [3:0] row, // output the row for row assertion
-		output logic [3:0] keyLED // output for LEDs
+		output logic [3:0] column // output for LEDs which is the column that is pressed
 );
 	logic [3:0] s;
 	logic int_osc;
@@ -45,6 +44,8 @@ module lab2_ktu #(parameter max = 249999)
 	sevenseg sevensegData(.s(s), .segments(seg));
 	
 	// Instantiating scanner
+	// column(switchRight) FPGA reads the column pad inputs here
+	// row(row) FPGA drives the keypad rows here
 	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .column(switchRight), .row(row));
 	
 	//assigning the LED to shine
