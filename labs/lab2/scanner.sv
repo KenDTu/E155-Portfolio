@@ -7,7 +7,8 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 			   input  logic       reset,
 			   input  logic       enable,
 			   input  logic [3:0] column, // when instantiating pass off-board switchRight
-			   output logic [3:0] row
+			   output logic [3:0] row,   // dirves the 4 NPN gates and performs the row scanning
+			   output logic [3:0] keyLead // off-board LED shows the pressed column
 );
 	logic [22:0] counter; // this logic must toggle at 2Hz
 	logic [1:0]  rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
@@ -22,7 +23,7 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 			else if (enable == 1 && counter == 5_999_999) rowNum <= rowNum + 1;
 		end
 		
-	// Checking the assertion of the row
+	// Assert each row
 	always_comb 
 		case (rowNum) // checking which row is asserted
 			2'b00:    row = 4'b0001; // R0
