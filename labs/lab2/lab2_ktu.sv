@@ -20,7 +20,7 @@ seg[6], seg[5], seg[4], seg[3], seg[2], seg[1], seg[0]
 see iPad
 */
 
-module lab2_ktu #(parameter max = 499999)
+module lab2_ktu #(parameter max = 249999)
 	   (input logic [3:0] switchLeft, // the four DIP switches (on the board, SW6)
 		input logic [3:0] switchRight, // the off board DIP switch
 		input logic reset, // switch for reset on the board
@@ -32,7 +32,7 @@ module lab2_ktu #(parameter max = 499999)
 );
 	logic [3:0] s;
 	logic int_osc;
-	logic [19:0] counter;
+	logic [17:0] counter;
 
 	// Internal high-speed oscillator
 	HSOSC #(.CLKHF_DIV(2'b01))
@@ -43,7 +43,7 @@ module lab2_ktu #(parameter max = 499999)
 	sevenseg sevensegData(.s(s), .segments(seg));
 	
 	// assign leftHex = (counter > max/2);
-	assign leftHex = counter[19];
+	assign leftHex = (counter < max/2);
 	assign rightHex = ~leftHex; // if rightHex is on then leftHex should be off
 	
 	assign s = leftHex ? switchLeft : switchRight;
