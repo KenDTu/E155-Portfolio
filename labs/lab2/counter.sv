@@ -5,7 +5,7 @@
 
 // counterWidth = 2^19 = 524,288 ≥ 400,000
 // clock math is 24MHz / 400,000 = 60Hz
-module counter #(parameter counterWidth = 20, parameter max = 499999) // TODO: adjust the counterWidth and max to have correct clock divider
+module counter #(parameter counterWidth = 18, parameter max = 249999) // TODO: adjust the counterWidth and max to have correct clock divider
 				 (input logic       int_osc,
 				  input logic       reset,
 				  input logic       enable,
