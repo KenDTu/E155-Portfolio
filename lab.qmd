@@ -13,15 +13,15 @@ For more details, check out [Lab 1](labs/lab1/lab1.qmd).
 
 ## Lab 2
 
-This was a strong learning experience.
+For more details, check out [Lab 2](labs/lab2/lab2.qmd). To be completed
 
 ## Lab 3
 
-This was a strong learning experience.
+For more details, check out [Lab 3](labs/lab3/lab3.qmd). to be complete
 
 ## Lab 4
 
-This was a strong learning experience.
+For more details, check out [Lab 4](labs/lab4/lab4.qmd). to be completed!!
 
 ## Lab 5
 
