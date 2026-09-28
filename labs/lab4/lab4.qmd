@@ -1,5 +1,5 @@
 ---
-title: "Lab 4: Template"
+title: "Lab 4: Digital Audio"
 listing:
   contents: lab4.qmd
   sort: "date desc"
@@ -10,7 +10,7 @@ listing:
 <!-- This is how you write a comment in your .qmd file -->
 ## Introduction
 
-In this lab, the E155 Microprocessor PCB was soldered with the UPduino v3.1 FPGA, an STM  Nucleo-L432KC MCU board, and various switches, SMT resistors, LEDS, and other electronic components. A design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs, a simple XOR and AND combinational logic to light up two other on-board LEDs, and logic control signal from a 4 bit representation DIP switch to toggle an off-board seven segment LED to represent a single hexademical digit. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz. 
+In this lab, I used the STM32L432KB Microcontroller Unit (MCU) to play music by using timers to generate a square waves by toggling a GPIO pin at a specific frequency for specified durations. I built a circuit to enable an I/O pin from the MCU to drive a speaker and implemented the timer functionality availability the MCU by reading through the datasheet adn writing my own libraru in C from scratch.
 
 ## Design and Testing Methodology
 
