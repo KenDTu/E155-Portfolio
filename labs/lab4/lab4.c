@@ -118,9 +118,11 @@ const int notes[][2] = {
 {  0,	0}};
 
 int main(void) {
-  RCC->APB1ENR1 |= (1 << 4);
+  RCC->APB1ENR1 |= (1 << 4); // Enable the APB1ENR1 for the TIM6
+  RCC->AHB2ENR  |= (1 << 1); // Enable the AHB2ENR for the GPIOB
+
   while (1) {
-  }
+  } 
 	
 	
 }
