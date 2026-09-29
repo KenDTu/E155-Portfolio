@@ -2,6 +2,9 @@
 // Fur Elise, E155 Lab 4
 // Author: Ken Tu
 
+#include "STM32L432KC_GPIO.h"
+#include "STM32L432KC_RCC.h"
+
 // Pitch in Hz, duration in ms
 const int notes[][2] = {
 {659,	125},
@@ -115,6 +118,9 @@ const int notes[][2] = {
 {  0,	0}};
 
 int main(void) {
+  RCC->APB1ENR1 |= (1 << 4);
+  while (1) {
+  }
 	
 	
 }
