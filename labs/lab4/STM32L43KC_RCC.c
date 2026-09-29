@@ -1,6 +1,7 @@
 // STM32L432KC_RCC.c
 // Source code for RCC functions
 
+#include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
 
 void configurePLL() {
