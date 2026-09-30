@@ -34,7 +34,7 @@ typedef struct
   __IO uint32_t CR1;         /*!< TIM16 control register 1,                              Address offset: 0x00 */
   __IO uint32_t CR2;         /*!< TIM16 control register 2,                              Address offset: 0x04 */
   uint32_t      RESERVED0;   /*!< Reserved,                                              Address offset: 0x08 */
-  __IO uint32_t DIER;  ;     /*!< TIM16 DMA/interrupt enable register,                   Address offset: 0x0C */
+  __IO uint32_t DIER;        /*!< TIM16 DMA/interrupt enable register,                   Address offset: 0x0C */
   __IO uint32_t SR;          /*!< TIM16 status register,                                 Address offset: 0x10 */
   __IO uint32_t EGR;         /*!< TIM16 event generation register,                       Address offset: 0x14 */
   __IO uint32_t CMR1;        /*!< TIM16 capture/compare mode register 1,                 Address offset: 0x18 */
