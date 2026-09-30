@@ -36,7 +36,7 @@ typedef struct
   uint32_t      RESERVED0;   /*!< Reserved,                                     Address offset: 0x08 */
   __IO uint32_t DIER;        /*!< TIM DMA/Interrupt Enable Register,            Address offset: 0x0C */
   __IO uint32_t SR;          /*!< TIM status register,                          Address offset: 0x10 */
-  __IO uint32_t EGR    ;     /*!< Event generation register,                    Address offset: 0x14 */
+  __IO uint32_t EGR;         /*!< Event generation register,                    Address offset: 0x14 */
   uint32_t      RESERVED1;   /*!< Reserved,                                     Address offset: 0x18 */
   uint32_t      RESERVED2;   /*!< Reserved,                                     Address offset: 0x1C */
   uint32_t      RESERVED3;   /*!< Reserved,                                     Address offset: 0x20 */
@@ -46,7 +46,7 @@ typedef struct
   
 } TIM_TypeDef;
 
-#define TIM ((TIM_TypeDef *) TIM6_BASE) // TODO: Do I need to change this to be TIM6 because I'll have a TIM16 header file too?
+#define TIM ((TIM_TypeDef *) TIM6_BASE) 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
