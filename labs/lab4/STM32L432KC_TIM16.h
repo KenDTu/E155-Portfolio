@@ -59,13 +59,14 @@ typedef struct
    
 } TIM16_TypeDef;
 
-#define TIM16 ((TIM_TypeDef *) TIM16_BASE) // TODO: Do I need to change this to be TIM6 because I'll have a TIM16 header file too?
+#define TIM16 ((TIM16_TypeDef *) TIM16_BASE) // 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
 void initTIM16(TIM16_TypeDef * TIMx); 
-void delay_millis16(TIM16_TypeDef * TIMx, uint32_t ms);
+
+// void delay_millis16(TIM16_TypeDef * TIMx, uint32_t ms); // TIMER16 does not require a delay
 
 #endif
