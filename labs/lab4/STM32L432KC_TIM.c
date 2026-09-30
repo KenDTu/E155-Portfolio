@@ -8,8 +8,9 @@
 void initTIM(TIM_TypeDef * TIMx) {
 
   TIM->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled
-  TIM->PSC = 0b1100001101001111;   // Configure prescale register to 49,999 so that using formula count_clk = fck_osc (8MHz)/(PSC[15:0] + 1) = 1600 Hz
-  TIM->ARR = 0b1111111111111111;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number
+  // (RCC->PLLCFGR & 0xFFFF80FF) | (0b1001000 << 8)
+  TIM->PSC |= 0b1100001101001111;   // Configure prescale register to 49,999 so that using formula count_clk = fck_osc (8MHz)/(PSC[15:0] + 1) = 1600 Hz
+  TIM->ARR |= 0b1111111111111111;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number
   
 }
 
