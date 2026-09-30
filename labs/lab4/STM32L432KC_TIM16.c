@@ -7,16 +7,13 @@
 #include "STM32L432KC_TIM16.h"
 
 void initTIM16(TIM16_TypeDef * TIMx) {
-  // TODO: Add your function definitions
 
-  // Disable slave mode
-  
-  // Configure counter
-  //TODO: What goes here?  Configure prescale register
-  //TODO: What goes here?  Configure auto-reload register
-   // Enable counter by setting bit 0 to 1: Counter enabled
+  TIM16->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled
+  TIM16->PSC = 0b1100001101001111;   // Configure prescale register to 49,999 so that using formula count_clk = fck_osc (8MHz)/(PSC[15:0] + 1) = 1600 Hz
+  TIM16->ARR = 0b1111111111111111;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number
 }
 
-void delay_millis16(TIM16_TypeDef * TIMx, uint32_t ms) {
-  // TODO: Add your function definition
-}
+// TIMER16 does not require a delay
+//void delay_millis16(TIM_TypeDef * TIMx, uint32_t ms) {
+//  // TODO: Add your function definition
+//}
