@@ -4,6 +4,8 @@
 
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
+#include "STM32L432KC_FLASH.h"
+#include "STM32L432KC_TIM.h"
 
 // Pitch in Hz, duration in ms
 const int notes[][2] = {
@@ -118,9 +120,10 @@ const int notes[][2] = {
 {  0,	0}};
 
 int main(void) {
-  RCC->APB1ENR1 |= (1 << 4); // Enable the APB1ENR1 for the TIM6
-  RCC->AHB2ENR  |= (1 << 1); // Enable the AHB2ENR for the GPIOB
-
+  RCC->APB1ENR1 |= (1 << 4);  // Enable the APB1ENR1 for the TIM6
+  RCC->APB2ENR  |= (1 << 17); // Enable the APB2ENR2 for TIM16
+  RCC->AHB2ENR  |= (1 << 1);  // Enable the AHB2ENR for the GPIOB
+   
   // Set PB3 as output (MODER bit 7 to 0 and bit 6 to 1
   GPIO->MODER  |= (1 << 6); // Configure bit 6 to be 1
   GPIO->MODER  &= ~(1 << 7); // Congigure bit 7 to be 0
