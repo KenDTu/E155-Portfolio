@@ -27,7 +27,7 @@ void configurePLL(void) {
     (RCC->PLLCFGR & 0xFFFFFF8F) | (0b000 << 4);     // Configure M = 1
     RCC->PLLCFGR |= (0b1 << 24);                     // Main PLL PLLCLK output enable
 
-    while ((RCC->CR >> 1) & 1 != 1) {
+    while (((RCC->CR >> 1) & 1) != 1) {
       // wait until PLL is locked
     }
 
