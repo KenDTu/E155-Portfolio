@@ -1,5 +1,5 @@
 // STM32L432KC_TIM.h
-// Header for TIM functions
+// Header for TIM6 functions
 
 #ifndef STM32L4_TIM_H
 #define STM32L4_TIM_H
@@ -17,16 +17,16 @@
 
 // TODO: Change the below to the relevant drivers
 // PLL
-#define PLLSRC_HSI 0
-#define PLLSRC_HSE 1
+//#define PLLSRC_HSI 0
+//#define PLLSRC_HSE 1
 
-// Clock configuration
-#define SW_HSI  0
-#define SW_HSE  1
-#define SW_PLL  2
+//// Clock configuration
+//#define SW_HSI  0
+//#define SW_HSE  1
+//#define SW_PLL  2
 
 /**
-  * @brief Reset and Clock Control
+  * @brief TIM6
   */
 
 typedef struct
@@ -46,13 +46,13 @@ typedef struct
   
 } TIM_TypeDef;
 
-#define TIM ((TIM_TypeDef *) TIM6_BASE)
+#define TIM ((TIM_TypeDef *) TIM6_BASE) // TODO: Do I need to change this to be TIM6 because I'll have a TIM16 header file too?
 
 ///////////////////////////////////////////////////////////////////////////////
 // Function prototypes
 ///////////////////////////////////////////////////////////////////////////////
 
-void initTIM(TIM_TypeDef * TIMx);
+void initTIM(TIM_TypeDef * TIMx); 
 void delay_millis(TIM_TypeDef * TIMx, uint32_t ms);
 
 #endif
