@@ -21,11 +21,11 @@ void configurePLL(void) {
       // wait until PLL is unlocked
     } 
     
-    (RCC->PLLCFGR & 0b00) | 0b01;                   // PLL Clock Source = MSI
-    (RCC->PLLCFGR & 0xFFFF80FF) | (0b1001000 << 8); // Configure N = 80
-    (RCC->PLLCFGR & 0xF9FFFFFF) | (0b01 << 25);     // Configure R = 4
-    (RCC->PLLCFGR & 0xFFFFFF8F) | (0b000 << 4);     // Configure M = 1
-    RCC->PLLCFGR |= (0b1 << 24);                     // Main PLL PLLCLK output enable
+    RCC->PLLCFGR |= 0b01;                           // PLL Clock Source = MSI
+    RCC->PLLCFGR |= 0b101000011111111; // Configure N = 80
+    RCC->PLLCFGR |= 0b011111111111111111111111111;     // Configure R = 4
+    RCC->PLLCFGR &= ~(0b1110000);               // Configure M = 1
+    RCC->PLLCFGR |= 0b1111111111111111111111111;                       // Main PLL PLLCLK output enable
 
     while (((RCC->CR >> 1) & 1) != 1) {
       // wait until PLL is locked
