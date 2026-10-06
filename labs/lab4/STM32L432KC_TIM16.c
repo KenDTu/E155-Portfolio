@@ -10,19 +10,15 @@
 // Using the PWM on channel 1
 void initTIM16(TIM16_TypeDef * TIMx) {
 
-  //TIM16->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled
-  //TIM16->PSC |= 0b1100001101001111;   // Configure prescale register to 49,999 so that using formula count_clk = fck_osc (4MHz)/(PSC[15:0] + 1) = 1600 Hz
-  //TIM16->ARR |= 0b1111111111111111;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number
-
-  TIM16->PSC = 3999;
-  TIM16->ARR = 0xFFFF; 
-  TIM16->CCR1 = 0;
-  TIM16->CCMR1 |= (0b110 << 4) | (1 << 3); // PWM mode 1 OC1M[2:0]
-  TIM16->CCER |= (1 << 0); // Bit 0 CC1E capture enable
-  TIM16->BDTR |= (1 << 15);   // Main output enable (MOE)
-  TIM16->CR1 |= (1 << 7);  // Buffer auto-reload preload enable (ARPE)
-  TIM16->EGR |= (1 << 0); // load register by updating event
-  TIM16->CR1 |= (1 << 0); // start TIM16 counter
+  TIM16->CR1 |= (1 << 0);  // Enable the counter +
+  TIM16->CR1 &= ~(1 << 1); // Enable the UEV +
+  TIM16->CR1 |= (1 << 7);  // Enable the ARPE +
+  TIM16->CR1 |= (1 << 11); // Enable the UIF status bit remapping +
+  
+  // default settings to be set when we use the TIM16->ARR when we calculate the ARR required from the duration
+  TIM16->PSC = 0;      // Configure to be zero by default + 
+  TIM16->ARR = 0xFFFF; // Configure to be max by default and set in the ARR function in playNote
+  TIM16->EGR |= (1 << 0);  // Restart the TIM16 counter // sure? + 
 
 }
 

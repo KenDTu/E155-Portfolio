@@ -7,12 +7,15 @@
 
 void initTIM(TIM_TypeDef * TIMx) {
 
-  TIM->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled
-  TIM->CR1 |= (1 << 11); // Enable the UIF remapping
-  // (RCC->PLLCFGR & 0xFFFF80FF) | (0b1001000 << 8)
-  TIM->PSC |= 399;   // Configure prescale register to 3999 so that using formula count_clk = fck_osc (4MHz)/(PSC[15:0] + 1) = 10KHz
-  TIM->ARR |= 0xFFFF;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number
-  TIM->EGR |= (1 <<0);  // Restart the TIM6 counter
+  TIM->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled +
+  TIM->CR1 |= (1 << 7); // Enable preload register to transfer contents at each update event, UEV, by setting the ARPE enable bit +
+  TIM->CR1 &= ~(1 << 1); // Settinng UDIS bit to 0 to enable the preloading feature from above - this enables UEV +
+  TIM->CR1 |= (1 << 11); // Enable the UIF remapping +
+
+  // default settings to be set when we use the TIM->ARR when we calculate the desired freq
+  TIM->PSC |= 0;   // Configure prescale register to 0 by default +
+  TIM->ARR |= 0xFFFF;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number +
+  TIM->EGR |= (1 <<0);  // Restart the TIM6 counter // sure? + 
 }
 
 void delay_millis(TIM_TypeDef * TIMx, uint32_t ms) {
