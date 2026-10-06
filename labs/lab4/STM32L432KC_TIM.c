@@ -4,7 +4,9 @@
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_TIM.h"
+#include <math.h>
 
+// Uses the basic timer on TIM6
 void initTIM(TIM_TypeDef * TIMx) {
 
   TIM->CR1 |= (1 << 0); // Enable counter by setting bit 0 to 1: Counter enabled +

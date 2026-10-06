@@ -5,9 +5,10 @@
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_TIM.h"
 #include "STM32L432KC_TIM16.h"
+#include <math.h>
 
 
-// Using the PWM on channel 1
+// Uses the basic counter on TIM16 +
 void initTIM16(TIM16_TypeDef * TIMx) {
 
   TIM16->CR1 |= (1 << 0);  // Enable the counter +
