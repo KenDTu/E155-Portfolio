@@ -4,6 +4,7 @@
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_TIM.h"
+#include <math.h>
 
 void pinMode(int pin, int function) {
     switch(function) {

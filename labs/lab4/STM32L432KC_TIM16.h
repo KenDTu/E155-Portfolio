@@ -15,16 +15,6 @@
 // Base addresses
 #define TIM16_BASE (0x40014400UL) // base address of TIM16
 
-// TODO: Change the below to the relevant drivers
-// PLL
-//#define PLLSRC_HSI 0
-//#define PLLSRC_HSE 1
-
-//// Clock configuration
-//#define SW_HSI  0
-//#define SW_HSE  1
-//#define SW_PLL  2
-
 /**
   * @brief TIM16
   */
@@ -66,7 +56,7 @@ typedef struct
 ///////////////////////////////////////////////////////////////////////////////
 
 void initTIM16(TIM16_TypeDef * TIMx); 
-
-// void delay_millis16(TIM16_TypeDef * TIMx, uint32_t ms); // TIMER16 does not require a delay
+void startDuration(int ms);
+int noteOver(void);
 
 #endif

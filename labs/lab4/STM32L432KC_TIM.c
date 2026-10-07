@@ -21,13 +21,11 @@ void initTIM(TIM_TypeDef * TIMx) {
 }
 
 // Outputs the desired frequency for the the note
-void freqOutput(int freq) {
-  
-  // TIM->PSC = round((4000000/freq) - 1); // set the PSC from desired frequency for the note on TIM6
+void setFreq(int freq) {
 
   TIM->PSC = 0;
-  int centralCLK = 4000000/(TIM->PSC + 1); // actual frequency of our counter
-  TIM->ARR = round(2000000/(2*freq) - 1); // works for frequencies above 31Hz. For lower frequencies, increase PSC
+  
+  TIM->ARR = round(4000000/(2*freq) - 1); // works for frequencies above 31Hz. For lower frequencies, increase PSC
   TIM->EGR |= (1 << 0);   // force update so PSC/ARR are loaded
 
 

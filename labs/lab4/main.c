@@ -121,6 +121,34 @@ const int notes[][2] = {
 {440,	500},
 {  0,	0}};
 
+// custom song
+// frequency map with note
+#define NOTE_C4 261.6
+#define NOTE_D4 293.7
+#define NOTE_E4 329.6
+#define NOTE_F4 349.2
+#define NOTE_G4 392
+#define NOTE_A4 440
+#define NOTE_BB4 446.2
+#define NOTE_C5 523.3
+
+
+const int notes1[][2] = {
+{NOTE_C4, 250}, {NOTE_C4, 250}, {NOTE_D4, 500}, {NOTE_C4, 500}, {NOTE_F4, 500}, {NOTE_E4, 1000},
+{NOTE_C4, 250}, {NOTE_C4, 250},
+
+{NOTE_D4, 500}, {NOTE_C4, 500}, {NOTE_G4, 500}, {NOTE_F4, 1000},
+{NOTE_C4, 250}, {NOTE_C4, 250},
+{NOTE_C5, 500}, {NOTE_A4, 500}, {NOTE_F4, 500},
+
+{NOTE_E4, 500}, {NOTE_D4, 500},
+{NOTE_BB4, 250}, {NOTE_BB4, 250},
+{NOTE_A4, 500}, {NOTE_F4, 500}, {NOTE_G4, 500}, {NOTE_F4, 1500},
+
+{0, 0}
+
+};
+
 int main(void) {
 
   RCC->APB1ENR1 |= (1 << 4);  // Enable the APB1ENR1 for the TIM6 +
@@ -135,14 +163,33 @@ int main(void) {
   initTIM16(TIM16); // Initialize TIM16 + 
 
   // testing the frequency + 
-  freqOutput(500);  
-  while (1) {
-    updateOutput();
-  }
+  //setFreq(100);  
+  //while (1) {
+  //  updateOutput();
+  //}
 
   // play the notes
   uint32_t i = 0;
-  while (notes[i][0] != 0) { // while the duration is not 0
+  while (notes1[i][1] != 0) { // while the duration is not 0
+    int freq = notes1[i][0];
+    int ms = notes1[i][1];
+    
+    if (freq != 0) {
+      setFreq(freq); // output the frequency
+    } else {
+      GPIO->BSRR = (1 << (22)); // reset PA6 to low (0) if the freq is 0
+    }
 
+    startDuration(ms); // start the timer and continue and wait for the update flag
+
+    while (!noteOver()) { 
+      if (freq != 0) {
+        updateOutput(); // Keep toggle the PA6
+      }
+    }
+
+    GPIO->BSRR = (1 << (22)); // reset PA6 to low (0) after the note is played
+    TIM16->SR &= ~(1 << 0); // clear the duration flag and set to 0 ready for the next note
+    i++;
   }
 }

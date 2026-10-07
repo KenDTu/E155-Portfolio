@@ -53,7 +53,7 @@ typedef struct
 ///////////////////////////////////////////////////////////////////////////////
 
 void initTIM(TIM_TypeDef * TIMx); 
-void freqOutput(int ms);
+void setFreq(int ms);
 void updateOutput(void);
 
 #endif

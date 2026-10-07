@@ -4,6 +4,7 @@
 #include "STM32L432KC_GPIO.h"
 #include "STM32L432KC_RCC.h"
 #include "STM32L432KC_TIM.h"
+#include <math.h>
 
 void configurePLL(void) {
     // Set clock to 80 MHz
