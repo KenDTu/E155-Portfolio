@@ -25,7 +25,7 @@ void setFreq(int freq) {
 
   TIM->PSC = 0;
   
-  TIM->ARR = round(4000000/(2*freq) - 1); // works for frequencies above 31Hz. For lower frequencies, increase PSC
+  TIM->ARR = 4000000/(2*freq) - 1; // works for frequencies above 31Hz. For lower frequencies, increase PSC
   TIM->EGR |= (1 << 0);   // force update so PSC/ARR are loaded
 
 

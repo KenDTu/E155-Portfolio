@@ -25,6 +25,8 @@ Below are my calculations to show the minimum and maximum duration supported, th
 ![Figure 1: Explanation of min/max frequency and duration](images/lab4explanations.png)
 :::
 
+The maximum error for a note is 0.03% which is well below the 1% error tolerance level. See the highlighted red box. We essentially repeat the calculation for all the notes in Fur Elise.
+
 ::: {.callout-note collapse="true"}
 ## Figure 2: Sheet with exhaustive calculation of percentage error of all notes in Fur Elise. 
 ![Figure 2: Sheet with exhaustive calculation of percentage error of all notes in Fur Elise. The maximum error for a note is 0.03% which is well below the 1% error tolerance level](images/error.png)
