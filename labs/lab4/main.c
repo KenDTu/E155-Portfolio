@@ -134,19 +134,15 @@ int main(void) {
   initTIM(TIM);// Initialize TIM6 +
   initTIM16(TIM16); // Initialize TIM16 + 
 
+  // testing the frequency + 
+  freqOutput(500);  
+  while (1) {
+    updateOutput();
+  }
+
   // play the notes
   uint32_t i = 0;
   while (notes[i][0] != 0) { // while the duration is not 0
 
-    playNote(notes[i][0], notes[i][1]);
-    i++;
-  
   }
-
-
-  while (1) {
-
-  } 
-	
-	
 }

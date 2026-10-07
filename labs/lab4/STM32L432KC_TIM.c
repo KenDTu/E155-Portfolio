@@ -17,24 +17,29 @@ void initTIM(TIM_TypeDef * TIMx) {
   // default settings to be set when we use the TIM->ARR when we calculate the desired freq
   TIM->PSC |= 0;   // Configure prescale register to 0 by default +
   TIM->ARR |= 0xFFFF;  // Configure auto-reload register (max count) to be maximum value for a 16 bit binary number +
-  TIM->EGR |= (1 <<0);  // Restart the TIM6 counter // sure? + 
+  TIM->EGR |= (1 << 0);  // Restart the TIM6 counter // sure? + 
 }
 
-void delay_millis(TIM_TypeDef * TIMx, uint32_t ms) {
-
-  if (ms == 0) {
-    return;
-  }
+// Outputs the desired frequency for the the note
+void freqOutput(int freq) {
   
-  TIM->CR1 &= ~(1 << 0);  // End of song so STOP
-  TIM->ARR = ms - 1;      // Stores the duration (ms) - 1
-  TIM->CNT = 0; // TODO: is this incorret?  Reset counter value to 0 
-  TIM->EGR |= (1 << 0); // Update generation);
-  TIM->SR &= ~(1 << 0);  // Clear the update interrupt flag after the generation
-  TIM->CR1 |= (1 << 0);  // Start the TIM6 counter
+  // TIM->PSC = round((4000000/freq) - 1); // set the PSC from desired frequency for the note on TIM6
 
-  while (!(TIM->SR & (1 << 0)));
- // over flow?
- TIM->CR1 &= ~(1 << 0); // Stop
+  TIM->PSC = 0;
+  int centralCLK = 4000000/(TIM->PSC + 1); // actual frequency of our counter
+  TIM->ARR = round(2000000/(2*freq) - 1); // works for frequencies above 31Hz. For lower frequencies, increase PSC
+  TIM->EGR |= (1 << 0);   // force update so PSC/ARR are loaded
+
+
+}
+
+// toggle the output signal +
+void updateOutput(void) {
+  if (TIM->SR & 0x0001) {  // if update event happened for UIF
+
+     TIM->SR &= ~(1 << 0); // clear the flag
+     togglePin(6);     // toggle the pin
+
+  }
 
 }
