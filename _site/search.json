@@ -4,7 +4,7 @@
     "href": "blog.html",
     "title": "E155 Blog",
     "section": "",
-    "text": "Here I discuss how much I struggled with this course lol. However as my old secondary school motto used to say, Per Ardua Ad Summa – Through Difficulties to the Heights.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 1\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
+    "text": "Here I discuss how much I struggled with this course lol. However as my old secondary school motto used to say, Per Ardua Ad Summa – Through Difficulties to the Heights.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -102,28 +102,28 @@
     "href": "lab.html#lab-4",
     "title": "Labs",
     "section": "Lab 4",
-    "text": "Lab 4\nFor more details, check out Lab 4. to be completed!!"
+    "text": "Lab 4\nFor more details, check out Lab 4. This is complete!! YAY!"
   },
   {
     "objectID": "lab.html#lab-5",
     "href": "lab.html#lab-5",
     "title": "Labs",
     "section": "Lab 5",
-    "text": "Lab 5\nThis was a strong learning experience."
+    "text": "Lab 5\nFor more details, check out Lab 4. to be completed!!"
   },
   {
     "objectID": "lab.html#lab-6",
     "href": "lab.html#lab-6",
     "title": "Labs",
     "section": "Lab 6",
-    "text": "Lab 6\nThis was a strong learning experience."
+    "text": "Lab 6\nFor more details, check out Lab 6. to be completed!!"
   },
   {
     "objectID": "resources.html",
     "href": "resources.html",
     "title": "Resources",
     "section": "",
-    "text": "Here is a link to the E155 course website.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 1\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
+    "text": "Here is a link to the E155 course website.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLab 4\n\n\nTHIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard! THIS lab was so fricking hard!\n\n\n\n\n\nSep 12, 2026\n\n\nKen Tu\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "labs/lab4/lab4.html",
@@ -299,5 +299,68 @@
     "title": "Lab 4: Digital Audio",
     "section": "Results",
     "text": "Results\nThe result is that Fur Elise and my chosen song of Happy Birthday is successfully able to be played on the microphone. You can from Fur Elise to Happy Birthday by altering the note[] in to be note1[] inside the while loop."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html",
+    "href": "labs/lab6/lab6.html",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "",
+    "text": "In this lab I …"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#introduction",
+    "href": "labs/lab6/lab6.html#introduction",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "",
+    "text": "In this lab I …"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#design-and-testing-methodology",
+    "href": "labs/lab6/lab6.html#design-and-testing-methodology",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Design and Testing Methodology",
+    "text": "Design and Testing Methodology\nWhen designing this system, I used the example blink file to view how existing drivers flash to the PB3 GPIO pin. Once the basic setup with the blinking LED was completed, I followed the style of how drivers were coded for timers and coded drivers for TIM6 and TIM16. This means that I wrote header files for the TIM6 and TIM16 registers. I determined that I would use TIM6 to control the frequency of the toggle rate – which sets the frequency of the note and I would use the TIM16 to control the duration of the note. When instantiating TIM6 and TIM16, I intially set both their prescale values to 0 and their auto-reload registers 0xFFFF the maximum value. My plan was to configure these fields to provide the specified frequency and duration when I used them in their functions. In the setup, I also had to enable both timers and the GPIOA pin for PA6 to have toggle functionality. The GPIOA PA6 pin was connected to an 8-ohm speaker using an LM386 audio amplifier with a gain of 200.\nTo play the music I wrote a while loop iterating through each tuple in the music.\nBelow are my calculations to show the minimum and maximum duration supported, the minimum and maximum frequency supported, and calculations which show that all the notes in Fur Elise can be replicated to within 1% accuracy.\n\n\n\n\n\n\nNoteFigure 1: Minimum and maximum calculations for the frequency and duration supported\n\n\n\n\n\n\n\n\nFigure 1: Explanation of min/max frequency and duration\n\n\n\n\n\nThe maximum error for a note is 0.03% which is well below the 1% error tolerance level. See the highlighted red box. We essentially repeat the calculation for all the notes in Fur Elise.\n\n\n\n\n\n\nNoteFigure 2: Sheet with exhaustive calculation of percentage error of all notes in Fur Elise.\n\n\n\n\n\n\n\n\nFigure 2: Sheet with exhaustive calculation of percentage error of all notes in Fur Elise. The maximum error for a note is 0.03% which is well below the 1% error tolerance level"
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#technical-documentation",
+    "href": "labs/lab6/lab6.html#technical-documentation",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Technical Documentation",
+    "text": "Technical Documentation\nThe source code for the project can be found in the associated Github repository.\n\n\n\n\n\n\nNoteFigure 3: Lab 4 Schematic\n\n\n\n\n\n\n\n\nFigure 3: Lab 4 STM32L432KC schematic with 8 ohm LM386 speaker\n\n\n\n\n\n\n\nThe GPIOA PA6 toggles at the desired frequency for a specified duration to oscillate the diaphragm of the microphone."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#results",
+    "href": "labs/lab6/lab6.html#results",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Results",
+    "text": "Results\nThe result is that Fur Elise and my chosen song of Happy Birthday is successfully able to be played on the microphone. You can from Fur Elise to Happy Birthday by altering the note[] in to be note1[] inside the while loop."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#conclusion",
+    "href": "labs/lab6/lab6.html#conclusion",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "Conclusion",
+    "text": "Conclusion\nI was able to successfully achieve the goals for this lab to play Fur Elise and a song of my own choice using the timers onboard the STM microcontroller. In total I spend 30 hours on this lab. Jumping and practice the skill of reading the block diagram and debugging which bits in which register to turn on was useful to help me know which sections to turn on and off. It was also valuable debugging how a counter can be set and reset to oscillate a signal in real time."
+  },
+  {
+    "objectID": "labs/lab6/lab6.html#ai-prototype-summary",
+    "href": "labs/lab6/lab6.html#ai-prototype-summary",
+    "title": "Lab 6: The Internet of Things and Serial Peripheral Interface",
+    "section": "AI Prototype Summary",
+    "text": "AI Prototype Summary\nFor this lab, students were tasked to see if “What timers should I use on the STM32L432KC to generate frequencies ranging from 220Hz to 1kHz? What’s the best choice of timer if I want to easily connect it to a GPIO pin? What formulae are relevant, and what registers need to be set to configure them properly?” We were told to prompt our favorite LLM.\nI used Claude AI and it suggests that TIM2 would be the best first for two main reasons. (1) The TIM2 is 32 bits wide as opposite to my choice of using the TIM16 and TIM6 which both are 16 bits wide. This means TIM2 has a higher resolution for the frequency of choice, however, this does not really matter because in software we are rounding the numbers for ARR regardless when you set it. (2) Claude also mentions that TIM2 is the simplest to use because it has no break/dead-time logic, so we don’t need to set up MOE – I’m not sure what does it but it doesn’t look like we set this up using TIM6 or TIM16 either. Claude also provided some example code to set up TIM2.\nIn summary, I think the Claude was a good starting point especially with the table to analyze the trade offs between each timer but I don’t think the advice should be followed verbatim. I draw on this conclusion based on the lack of relevant explanation for the set up MOE argument.\n\n\n\n\n\n\nNoteFigure 4: Claude’s timer advice\n\n\n\n\n\n\n\n\nFigure 4: Table of timer comparisons\n\n\n\n\n\n\n\n\n\n\n\nNoteFigure 5: Claude’s TIM2 setup to set the frequency\n\n\n\n\n\n\n\n\nFigure 5: Claude’s TIM2 setup to set the frequency"
+  },
+  {
+    "objectID": "lab.html#lab-6-1",
+    "href": "lab.html#lab-6-1",
+    "title": "Labs",
+    "section": "Lab 6",
+    "text": "Lab 6\nThis was a strong learning experience."
+  },
+  {
+    "objectID": "lab.html#lab-7",
+    "href": "lab.html#lab-7",
+    "title": "Labs",
+    "section": "Lab 7",
+    "text": "Lab 7\nFor more details, check out Lab 4. to be completed!!"
   }
 ]

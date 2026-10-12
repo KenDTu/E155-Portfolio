@@ -9,3 +9,13 @@ categories:
 draft: false
 ---
 
+---
+title: "Lab 4"
+description: Wallahi icl this lab was bare hard. Too me bare long to complete it because I'm stupid. Nah but fr this lab was bare interesting init fam. Cos I swear I though I wasn't gonna complete it. I was genuninely about to give up.
+author: "Ken Tu"
+date: "10/07/2026"
+categories:
+  - reflection
+  - labreport
+draft: false
+---

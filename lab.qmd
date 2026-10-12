@@ -21,12 +21,16 @@ For more details, check out [Lab 3](labs/lab3/lab3.qmd). to be complete
 
 ## Lab 4
 
-For more details, check out [Lab 4](labs/lab4/lab4.qmd). to be completed!!
+For more details, check out [Lab 4](labs/lab4/lab4.qmd). This is complete!! YAY!
 
 ## Lab 5
 
-This was a strong learning experience.
+For more details, check out [Lab 4](labs/lab4/lab4.qmd). to be completed!!
 
 ## Lab 6
 
-This was a strong learning experience.
+For more details, check out [Lab 6](labs/lab6/lab6.qmd). to be completed!!
+
+## Lab 7
+
+For more details, check out [Lab 4](labs/lab4/lab4.qmd). to be completed!!
