@@ -7,7 +7,7 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 			   input  logic       reset,
 			   input  logic       enable,
 			   input  logic [3:0] column, // when instantiating pass off-board switchRight
-			   output logic [3:0] row,   // dirves the 4 NPN gates and performs the row scanning
+			   output logic [3:0] switchRight,   // dirves the 4 NPN gates and performs the row scanning AKA row
 			   output logic [3:0] keyLead // off-board LED shows the pressed column
 );
 	logic [22:0] counter; // this logic must toggle at 2Hz
@@ -20,17 +20,27 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 		begin
 			if(reset == 0) 
 					 rowNum <= 2'b00;
-			else if (enable == 1 && counter == 5_999_999) rowNum <= rowNum + 1;
+			else if (enable == 1 && counter == 5_999_999) rowNum <= rowNum + 1; // 
 		end
 		
 	// Assert each row
 	always_comb 
 		case (rowNum) // checking which row is asserted
-			2'b00:    row = 4'b0001; // R0
-			2'b01:    row = 4'b0010; // R1
-			2'b10:    row = 4'b0100; // R2
-			2'b11:    row = 4'b1000; // R3
-			default:  row = 4'b0001; // R0
+			2'b00:    switchRight = 4'b0001; // R0
+			2'b01:    switchRight = 4'b0010; // R1
+			2'b10:    switchRight = 4'b0100; // R2
+			2'b11:    switchRight = 4'b1000; // R3
+			default:  switchRight = 4'b1111; // R0
+		endcase
+		
+	// column voltage should be determined by circuit
+	always_comb 
+		case (column) // checking which row is asserted
+			4'b1110:    keyLead = 4'b0001; // col0
+			4'b1101:    keyLead = 4'b0010; // col1
+			4'b1011:    keyLead = 4'b0100; // col2
+			4'b0111:    keyLead = 4'b1000; // col3
+			default:  keyLead = 4'b0000; // no column
 		endcase
 	
 	
