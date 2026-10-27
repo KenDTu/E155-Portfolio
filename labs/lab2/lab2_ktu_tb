@@ -1,0 +1,59 @@
+// Author: Ken Tu
+// Email: ktu@g.hmc.edu
+// Date of Creation: 10/27/2026
+// Test bench for top module tb 
+// "automatic testbench which demonstrates all four output transitions, enable and reset features"
+// "automatic testbench"
+
+`timescale 1 ns/1 ps
+module lab2_ktu_tb();
+	logic clk, reset, enable; // system clock, active high reset, active ? enable
+	logic [3:0] s; // input switches
+	logic [2:0] led; // output from logic
+	logic [6:0] seg; // output the segments of a common-anode 7-segment display
+	
+	// Instantiate the lab1_ktu DUT for testing 
+    lab1_ktu lab1_ktu(
+        .s(s),
+        .reset(reset),
+        .enable(enable),
+		.led(led),
+        .seg(seg)
+    );
+	
+	// generates the clock to oscillate
+	always 
+		begin
+			clk = 1; #5; clk = 0; #5;
+		end
+	
+	initial begin
+
+        //  ========== TESTING TOP MODULE ==========
+    
+	
+
+	
+	// ============ TESTING SCANNING MODULE =======================
+	
+    // ============ TESTING FUNCTIONALITY OF SEVEN SEGMENT =======================
+    // example test 0
+        s = 4'b0000;                // setup inputs
+        #10;                        // wait required time
+        assert (seg == 7'b100_0000)       // check outputs
+            $display("PASSED! The led controller behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time); 
+            
+    // test 1
+        s = 4'b0001;                // setup inputs
+        #10;                        // wait required time
+        assert (seg == 7'b111_1001)       // check outputs
+            $display("PASSED! The led controller behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time); 
+	
+	
+	    #100 $stop;
+	end	
+endmodule
