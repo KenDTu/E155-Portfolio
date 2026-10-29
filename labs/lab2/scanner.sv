@@ -13,14 +13,14 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 	logic [22:0] counter; // this logic must toggle at 2Hz
 	logic [1:0]  rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
 
-	counter #(.max(5_999_999)) counterScanner(.clk(clk), .reset(reset), .enable(enable), .counter(counter));
+	counter #(.max(999_999)) counterScanner(.clk(clk), .reset(reset), .enable(enable), .counter(counter));
 	
 	// asserting each row every 2Hz
-	always_ff @(posedge clk, negedge reset)
+	always_ff @(posedge clk) // negedge reset
 		begin
-			if(reset == 0) 
-					 rowNum <= 2'b00;
-			else if (enable == 1 && counter == 5_999_999) rowNum <= rowNum + 1; // 
+			//if(reset == 0) 
+					 //rowNum <= 2'b00;
+			if (counter == 999_997) rowNum <= rowNum + 1; // enable == 1 && 
 		end
 		
 	// Assert each row
@@ -33,15 +33,17 @@ module scanner(input  logic       clk, // when instantiating pass int_osc
 			default:  switchRight = 4'b1111; // R0
 		endcase
 		
+	assign keyLead = ~column;
 	// column voltage should be determined by circuit
-	always_comb 
-		case (column) // checking which row is asserted
-			4'b1110:    keyLead = 4'b0001; // col0
-			4'b1101:    keyLead = 4'b0010; // col1
-			4'b1011:    keyLead = 4'b0100; // col2
-			4'b0111:    keyLead = 4'b1000; // col3
-			default:  keyLead = 4'b0000; // no column
-		endcase
+	//always_comb 
+		//case (column) // checking which row is asserted
+			
+			//4'b1110:    keyLead = 4'b0001; // col0
+			//4'b1101:    keyLead = 4'b0010; // col1
+			//4'b1011:    keyLead = 4'b0100; // col2
+			//4'b0111:    keyLead = 4'b1000; // col3
+			//default:  keyLead = 4'b0000; // no column
+		//endcase
 	
 	
 	
