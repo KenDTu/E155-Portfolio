@@ -1,49 +1,70 @@
-// Author: Ken TU 
+// Author: Ken Tu
 // Email: ktu@g.hmc.edu
-// Date of Creation: 09/22/2026
-// Scanner module for the scanning section for lab 2
+// Date of Creation: 09/20/2026
+// Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
 
-module scanner(input  logic       clk, // when instantiating pass int_osc
-			   input  logic       reset,
-			   input  logic       enable,
-			   input  logic [3:0] column, // when instantiating pass off-board switchRight
-			   output logic [3:0] switchRight,   // dirves the 4 NPN gates and performs the row scanning AKA row
-			   output logic [3:0] keyLead // off-board LED shows the pressed column
+/* ======= PIN ASSIGNMENTS ==========
+leftHex = P46
+rightHex = P45
+
+LEFT SEGEMENT SWTICH
+switchLeft[3], switchLeft[2], switchLeft[1], switchLeft[0]
+P4, P48, P47, P2
+
+RIGHT SEGEMENT SWITCH
+switchRight[3], switchRight[2], switchRight[1], switchRight[0]
+P32, P35, P31, P37
+
+OUTPUT SEG
+seg[6], seg[5], seg[4], seg[3], seg[2], seg[1], seg[0]
+see iPad
+*/
+
+
+// alter the counterWidth from 18 to 22
+// alter the max from 249_999 to 5_999_999
+module lab2_ktu_scanner #(parameter max = 5_999_999, parameter counterWidth = 22)
+	   (input logic [3:0] switchLeft, // the four DIP switches (on the board, SW6)
+		output logic [3:0] switchRight, // the off board DIP switch
+		input logic [3:0] column, // columns into FPGA
+		input logic reset, // switch for reset on the board
+		input logic enable, // switch for enable on the board
+		output logic [2:0] led,   // 3 LEDs (you may use the on-board LEDs)
+		output logic [6:0] seg,   // the segments of a common-anode 7-segment display
+		output leftHex, // to toggle the left seven segment power
+		output rightHex, // to toggle the right seven segment power
+		output [3:0] keyLead  // to toggle the LEDs
 );
-	logic [22:0] counter; // this logic must toggle at 2Hz
-	logic [1:0]  rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
+	logic [3:0] s;
+	logic int_osc;
+	logic [counterWidth:0] counter;
 
-	counter #(.max(999_999)) counterScanner(.clk(clk), .reset(reset), .enable(enable), .counter(counter));
+	// Internal high-speed oscillator
+	HSOSC #(.CLKHF_DIV(2'b01))
+		hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(int_osc));
 	
-	// asserting each row every 2Hz
-	always_ff @(posedge clk) // negedge reset
-		begin
-			//if(reset == 0) 
-					 //rowNum <= 2'b00;
-			if (counter == 999_997) rowNum <= rowNum + 1; // enable == 1 && 
-		end
-		
-	// Assert each row
-	always_comb 
-		case (rowNum) // checking which row is asserted
-			2'b00:    switchRight = 4'b0001; // R0
-			2'b01:    switchRight = 4'b0010; // R1
-			2'b10:    switchRight = 4'b0100; // R2
-			2'b11:    switchRight = 4'b1000; // R3
-			default:  switchRight = 4'b1111; // R0
-		endcase
-		
-	assign keyLead = ~column;
-	// column voltage should be determined by circuit
-	//always_comb 
-		//case (column) // checking which row is asserted
-			
-			//4'b1110:    keyLead = 4'b0001; // col0
-			//4'b1101:    keyLead = 4'b0010; // col1
-			//4'b1011:    keyLead = 4'b0100; // col2
-			//4'b0111:    keyLead = 4'b1000; // col3
-			//default:  keyLead = 4'b0000; // no column
-		//endcase
+	// Instantiating Counter to oscillate the l
+	counter counter1(.clk(int_osc), .reset(reset), .enable(enable), .counter(counter));
+	//sevenseg sevensegData(.s(s), .segments(seg));
+	
+	// assign leftHex = (counter > max/2);
+	assign leftHex = (counter < max/2);
+	assign rightHex = ~leftHex; // if rightHex is on then leftHex should be off
+	
+	assign s = leftHex ? switchLeft : switchRight;
+	
+	// switchRight[3] - P4, switchRight[2] - P48, switchRight[1] - P47, switchRight[0] - P2
+	
+	// pin assignments from lab 1 to verify
+    //  Assign LED output
+	assign led[0] = switchLeft[1] ^ switchLeft[0];
+	assign led[1] = switchLeft[3] && switchLeft[2];
+	assign led[2] = (counter < max/2);
+	
+	
+	// TODO: everything below is to turn on the scanner
+	// SCANNER
+	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .column(column), .switchRight(switchRight), .keyLead(keyLead));
 	
 	
 	
