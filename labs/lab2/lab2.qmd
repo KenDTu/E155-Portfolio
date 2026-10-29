@@ -1,5 +1,5 @@
 ---
-title: "Lab 2: Template"
+title: "Lab 2: Multiplexed Seven Segment Display and Functioning Keypad Scanner"
 listing:
   contents: lab2.qmd
   sort: "date desc"
@@ -10,11 +10,15 @@ listing:
 <!-- This is how you write a comment in your .qmd file -->
 ## Introduction
 
-In this lab, the E155 Microprocessor PCB was soldered with the UPduino v3.1 FPGA, an STM  Nucleo-L432KC MCU board, and various switches, SMT resistors, LEDS, and other electronic components. A design was implemented on the FPGA to demonstrate the functionality of the on-board high-speed oscillator by blinking one of the on-board LEDs, a simple XOR and AND combinational logic to light up two other on-board LEDs, and logic control signal from a 4 bit representation DIP switch to toggle an off-board seven segment LED to represent a single hexademical digit. The high speed oscillator was configured at a frequency of 24 MHz and divided down using a counter to achieve a blinking frequency of ~2.4 Hz. 
+In this lab, I implement a time-multiplexing scheme to drive two seven-segment displays with a single set of FPGA I/O pins and installed a keypad and verified that the correct logical signals pass through it. The time-multiplexing scheme drives two independent alphanumeric symbols onto the two seven-segment using one on-board DIP switch and one off-board DIP switch. 
 
 ## Design and Testing Methodology
 
-The on-board high-speed oscillator (HSOSC) from the iCE40 UltraPlus primitive library was used to generate a clock signal at 24 MHz. Then, a counter was used to divide the high frequency clock signal down so that the blinking frequency could be easily visualized using one of the on-board LEDs. Counter is a variable with a width of 24 bits. Therefore when selecting the bit to represent the LED we can set the 2.4Hz blinking LED to be the most significant 24th bit as this will be on. The $$\text{target frequency = input frequency / division factor} $$ Therefore as the target frequency is 2.4Hz and the input frequency is 24MHz, we require the division factor to close to 10,000,000. We can roughly achieve this by selecting the 24th bit to be a 1 because $$2^{23} = 8,388,608 \implies \text{target frequency} = \frac{2.4MHz}{8,388,608} \approx 2.4Hz$$
+This section will explain the design of a multiplexed seven segment display and the functionality of the keypad scanner. 
+
+The multiplexed 7-segment display screen has two 7 segment LED displays side by side. The effect is the human eye sees two independent alphanumeric representations (i.e., numbers or letters). However, what actually happens is that the same alphanumeric symbol is output to both LEDs, but only one of the LEDs is lit at a time. The design is as follows. Two switches `[3:0] switchLeft` and `[3:0] switchRight` the nibbles which decide which LEDs should be lit on on the seven-segment display such that its corresponding hexadecimal representation is output. The `switchLeft` and `switchRight` are chosen as datapaths from a mux using the signal `leftHex` to decide whether you want to output to both seven-segments the `leftSwitch`'s hexadecimal or the `rightSwitch`'s hexademical value and fed into Lab 1's `sevenseg.sv` module to output the pattern of LED required. Next, a wire drives the left seven-segment display on and another wire drives the right seven-segment display. These wires are given logic such than when one is on the other is off therefore resulting in onto one of the LEDs being lit at once. Then a counter with reset, enable, and a max count functionality is used to set the frequency at which mux chooses the left or right hexadecimal value. The counter is fed an internal clock from the FPGA's HSOSC IP block and once this counter reachs a specified max count, the 
+
+The keypad scanner 
 
 The DIP switch was used to drive an XOR and AND function to light two other LEDs by assigning two sets of to different bits which were encoding in the DIP switch. A testbench with the 4 different outcomes for each output was created.
 
