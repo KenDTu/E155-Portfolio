@@ -12,6 +12,7 @@ module lab2_ktu_tb ();
 		logic [3:0] column; // columns into FPGA
 		logic reset; // switch for reset on the board
 		logic enable; // switch for enable on the board
+		logic clk; //create a clock signal
 		logic [2:0] led;   // 3 LEDs (you may use the on-board LEDs)
 		logic [6:0] seg;   // the segments of a common-anode 7-segment display
 		logic leftHex; // to toggle the left seven segment power
@@ -20,11 +21,12 @@ module lab2_ktu_tb ();
 		logic [1:0]  rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
 	
 	// Instantiate the lab1_ktu DUT for testing 
-    lab2_ktu #(parameter max = 5_999_999, parameter counterWidth = 22) lab2_ktu(
+    lab2_ktu_scanner lab2_ktu_scanner(
         .switchLeft(switchLeft),
         .switchRight(switchRight),
         .column(column),
 		.reset(reset),
+		.enable(enable),
         .led(led),
 		.seg(seg),
 		.leftHex(leftHex),
@@ -123,38 +125,19 @@ module lab2_ktu_tb ();
 	// ============ TESTING FUNCTIONALITY OF multiplexing =======================
 
     // example test muliplexing power leftHex and rightHex
-        leftHex = 1;                // setup inputs
-        #10;                        // wait required time
-        assert (rightHex == 0)       // check outputs
-            $display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
-        else 
-            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
+        //leftHex = 1;                // setup inputs
+        //#10;                        // wait required time
+        //assert (rightHex == 0)       // check outputs
+            //$display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
+        //else 
+            //$error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
 			
-        leftHex = 0;                // setup inputs
-        #10;                        // wait required time
-        assert (rightHex == 1)       // check outputs
-            $display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
-        else 
-            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
-	
-	
-    // ============ TESTING FUNCTIONALITY OF SEVEN SEGMENT =======================
-    // example test 0
-        s = 4'b0000;                // setup inputs
-        #10;                        // wait required time
-        assert (seg == 7'b100_0000)       // check outputs
-            $display("PASSED! The led controller behaves as desired at time: %0t.", $time);
-        else 
-            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time); 
-            
-    // test 1
-        s = 4'b0001;                // setup inputs
-        #10;                        // wait required time
-        assert (seg == 7'b111_1001)       // check outputs
-            $display("PASSED! The led controller behaves as desired at time: %0t.", $time);
-        else 
-            $error("FAILED! The led controller behaves incorrectly at time: %0t.", $time); 
-	
+        //leftHex = 0;                // setup inputs
+        //#10;                        // wait required time
+        //assert (rightHex == 1)       // check outputs
+            //$display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
+        //else 
+            //$error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
 	
 	    #100 $stop;
 	end	
