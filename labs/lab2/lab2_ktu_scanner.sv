@@ -2,7 +2,7 @@
 // Email: ktu@g.hmc.edu
 // Date of Creation: 09/20/2026
 // Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
-
+`timescale 1 ns/1 ps
 /* ======= PIN ASSIGNMENTS ==========
 leftHex = P46
 rightHex = P45
@@ -23,7 +23,7 @@ see iPad
 
 // alter the counterWidth from 18 to 22
 // alter the max from 249_999 to 5_999_999
-module lab2_ktu_scanner #(parameter max = 5_999_999, parameter counterWidth = 22)
+module lab2_ktu #(parameter max = 5_999_999, parameter counterWidth = 24)
 	   (input logic [3:0] switchLeft, // the four DIP switches (on the board, SW6)
 		output logic [3:0] switchRight, // the off board DIP switch
 		input logic [3:0] column, // columns into FPGA
@@ -35,7 +35,7 @@ module lab2_ktu_scanner #(parameter max = 5_999_999, parameter counterWidth = 22
 		output rightHex, // to toggle the right seven segment power
 		output [3:0] keyLead  // to toggle the LEDs
 );
-	logic [3:0] s;
+  logic [3:0] s;
 	logic int_osc;
 	logic [counterWidth:0] counter;
 
@@ -45,7 +45,7 @@ module lab2_ktu_scanner #(parameter max = 5_999_999, parameter counterWidth = 22
 	
 	// Instantiating Counter to oscillate the l
 	counter counter1(.clk(int_osc), .reset(reset), .enable(enable), .counter(counter));
-	//sevenseg sevensegData(.s(s), .segments(seg));
+	sevenseg sevensegData(.s(s), .segments(seg));
 	
 	// assign leftHex = (counter > max/2);
 	assign leftHex = (counter < max/2);
@@ -64,8 +64,7 @@ module lab2_ktu_scanner #(parameter max = 5_999_999, parameter counterWidth = 22
 	
 	// TODO: everything below is to turn on the scanner
 	// SCANNER
-	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .column(column), .switchRight(switchRight), .keyLead(keyLead));
-	
-	
+	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .switchRight(switchRight));
+	assign keyLead = ~column;
 	
 endmodule
