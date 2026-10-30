@@ -1,0 +1,144 @@
+// Author: Ken Tu
+// Email: ktu@g.hmc.edu
+// Date of Creation: 10/27/2026
+// Test bench for top module tb 
+// "automatic testbench which demonstrates all four output transitions, enable and reset features"
+// "automatic testbench"
+
+`timescale 1 ns/1 ps
+module lab2_ktu_tb ();
+		logic [3:0] switchLeft; // the four DIP switches (on the board, SW6)
+		logic [3:0] switchRight; // the off board DIP switch
+		logic [3:0] column; // columns into FPGA
+		logic reset; // switch for reset on the board
+		logic enable; // switch for enable on the board
+		logic clk; //create a clock signal
+		logic [2:0] led;   // 3 LEDs (you may use the on-board LEDs)
+		logic [6:0] seg;   // the segments of a common-anode 7-segment display
+		logic leftHex; // to toggle the left seven segment power
+		logic rightHex; // to toggle the right seven segment power
+		logic [3:0] keyLead;  // to toggle the LEDs
+		logic [1:0] rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
+	
+	// Instantiate the lab1_ktu DUT for testing 
+    lab2_ktu lab2_ktu(
+        .switchLeft(switchLeft),
+        .switchRight(switchRight),
+        .column(column),
+		.reset(reset),
+		.enable(enable),
+        .led(led),
+		.seg(seg),
+		.leftHex(leftHex),
+		.rightHex(rightHex),
+		.keyLead(keyLead)
+    );
+	
+	// generates the clock to oscillate
+	always 
+		begin
+			clk = 1; #5; clk = 0; #5;
+		end
+	
+	initial begin
+
+        //  ========== TESTING TOP MODULE ==========
+    
+	
+
+	
+	// ============ TESTING SCANNING MODULE =======================
+	
+	// four output transitions for the row assertion
+	
+        // rowNum = 2'b00;                // setup inputs
+        // #10;                        // wait required time
+        // assert (switchRight == 4'b0001)       // check outputs
+        //     $display("PASSED! Row 0 assertion correctly behaves as desired at time: %0t.", $time);
+        // else 
+        //     $error("FAILED! Row 0 assertion behaves incorrectly at time: %0t.", $time);
+			
+        // rowNum = 2'b01;              // setup inputs
+        // #10;                        // wait required time
+        // assert (switchRight == 4'b0010)       // check outputs
+        //     $display("PASSED! Row 1 assertion function correctly behaves as desired at time: %0t.", $time);
+        // else 
+        //     $error("FAILED! Row 1 assertion behaves incorrectly at time: %0t.", $time);
+			
+        // rowNum = 2'b10;              // setup inputs
+        // #10;                        // wait required time
+        // assert (switchRight == 4'b0100)       // check outputs
+        //     $display("PASSED! Row 2 assertion function correctly behaves as desired at time: %0t.", $time);
+        // else 
+        //     $error("FAILED!  Row 2 assertion behaves incorrectly at time: %0t.", $time);
+			
+        // rowNum = 2'b11;                // setup inputs
+        // #10;                        // wait required time
+        // assert (switchRight == 4'b1000)       // check outputs
+        //     $display("PASSED!  Row 3 assertion function correctly behaves as desired at time: %0t.", $time);
+        // else 
+        //     $error("FAILED!  Row 3 assertion behaves incorrectly at time: %0t.", $time);
+			
+		// four output transition from the column to the keyLead
+		
+        column = 4'b1110;                // setup inputs
+        #10;                        // wait required time
+        assert (keyLead == 4'b0001)       // check outputs
+            $display("PASSED! Col 0 correctly behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED! Col 0 behaves incorrectly at time: %0t.", $time);
+			
+        column = 4'b1101;              // setup inputs
+        #10;                        // wait required time
+        assert (keyLead == 4'b0010)       // check outputs
+            $display("PASSED! Col 1 correctly behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED! Col 1 incorrectly at time: %0t.", $time);
+			
+        column = 4'b1011;              // setup inputs
+        #10;                        // wait required time
+        assert (keyLead == 4'b0100)       // check outputs
+            $display("PASSED! Col 2 correctly behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED!  Col 2 behaves incorrectly at time: %0t.", $time);
+			
+        column = 4'b0111;                // setup inputs
+        #10;                        // wait required time
+        assert (keyLead == 4'b1000)       // check outputs
+            $display("PASSED!  Col 3 function correctly behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED!  Col 3 behaves incorrectly at time: %0t.", $time);
+			
+		// default state for the column which would be column = 4'b1111
+		// leds off
+        column = 4'b1111;                // setup inputs
+        #10;                        // wait required time
+        assert (keyLead == 4'b0000)       // check outputs
+            $display("PASSED!  LEDs off function correctly behaves as desired at time: %0t.", $time);
+        else 
+            $error("FAILED!  LEDs off behaves incorrectly at time: %0t.", $time);
+			
+	// Testing the enable and reset functionality
+	
+		
+	
+	// ============ TESTING FUNCTIONALITY OF multiplexing =======================
+
+    // example test muliplexing power leftHex and rightHex
+        //leftHex = 1;                // setup inputs
+        //#10;                        // wait required time
+        //assert (rightHex == 0)       // check outputs
+            //$display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
+        //else 
+            //$error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
+			
+        //leftHex = 0;                // setup inputs
+        //#10;                        // wait required time
+        //assert (rightHex == 1)       // check outputs
+            //$display("PASSED! The multiplexing function correctly behaves as desired at time: %0t.", $time);
+        //else 
+            //$error("FAILED! The led controller behaves incorrectly at time: %0t.", $time);
+	
+	    #100 $finish;
+	end	
+endmodule
