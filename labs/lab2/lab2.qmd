@@ -32,11 +32,18 @@ Next I used the openFPGA to upload my program to the FPGA. In my local terminal,
 
 The source code for the project can be found in the associated [Github repository](https://github.com/KenDTu/E155-Portfolio).
 
+::: {.callout-note collapse="true"}
+## Figure 1: Multiplexing section block diagram for the synthesis of the top module
+![Figure 1: Multiplexing section block diagram for the synthesis of the top module](images/multiplexing_block_diagram.png)
+:::
+
 
 ::: {.callout-note collapse="true"}
-## Figure 1: Lab 1 Block Diagram
-![Figure 1: Block diagram for the synthesis of the top module](images/blockdiagram.jpeg)
+## Figure 2: Keyboard section block diagram for the synthesis of the top module
+![Figure 2: Keyboard section block diagram for the synthesis of the top module](images/keypad_block_diagram.png)
 :::
+
+
 
 <!-- ::: {.callout-note collapse="true"}
 ## Figure X: Image title
