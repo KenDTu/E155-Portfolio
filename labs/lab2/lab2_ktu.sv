@@ -2,7 +2,7 @@
 // Email: ktu@g.hmc.edu
 // Date of Creation: 09/20/2026
 // Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
-
+`timescale 1 ns/1 ps
 /* ======= PIN ASSIGNMENTS ==========
 leftHex = P46
 rightHex = P45
@@ -20,19 +20,24 @@ seg[6], seg[5], seg[4], seg[3], seg[2], seg[1], seg[0]
 see iPad
 */
 
-module lab2_ktu #(parameter max = 249999)
+
+// alter the counterWidth from 18 to 22
+// alter the max from 249_999 to 5_999_999
+module lab2_ktu #(parameter max = 5_999_999, parameter counterWidth = 24)
 	   (input logic [3:0] switchLeft, // the four DIP switches (on the board, SW6)
-		input logic [3:0] switchRight, // the off board DIP switch
+		output logic [3:0] switchRight, // the off board DIP switch
+		input logic [3:0] column, // columns into FPGA
 		input logic reset, // switch for reset on the board
 		input logic enable, // switch for enable on the board
 		output logic [2:0] led,   // 3 LEDs (you may use the on-board LEDs)
 		output logic [6:0] seg,   // the segments of a common-anode 7-segment display
 		output leftHex, // to toggle the left seven segment power
-		output rightHex // to toggle the right seven segment power
+		output rightHex, // to toggle the right seven segment power
+		output [3:0] keyLead  // to toggle the LEDs
 );
-	logic [3:0] s;
+  logic [3:0] s;
 	logic int_osc;
-	logic [17:0] counter;
+	logic [counterWidth:0] counter;
 
 	// Internal high-speed oscillator
 	HSOSC #(.CLKHF_DIV(2'b01))
@@ -55,4 +60,11 @@ module lab2_ktu #(parameter max = 249999)
 	assign led[0] = switchLeft[1] ^ switchLeft[0];
 	assign led[1] = switchLeft[3] && switchLeft[2];
 	assign led[2] = (counter < max/2);
+	
+	
+	// TODO: everything below is to turn on the scanner
+	// SCANNER
+	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .switchRight(switchRight));
+	assign keyLead = ~column;
+	
 endmodule
