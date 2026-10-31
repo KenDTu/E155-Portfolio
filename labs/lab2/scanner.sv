@@ -8,22 +8,13 @@ module scanner #(parameter counterWidth = 25, parameter max = 8_999_999)
 			   input  logic       reset,
 			   input  logic       enable,
 			   // input  logic [3:0] column, // when instantiating pass off-board switchRight
-			   output logic [3:0] switchRight   // dirves the 4 NPN gates and performs the row scanning AKA row
+			   output logic [3:0] switchRight   // drives the 4 NPN gates and performs the row scanning AKA row
 			   // output logic [3:0] keyLead // off-board LED shows the pressed column
 );
 	logic [counterWidth-1:0] counter; // this logic must toggle at 2Hz
-	// logic [1:0]  rowNum;  // R0 - 00, R1 - 01, R2 - 10, or R3 - 11
 
 	counter #(.counterWidth(counterWidth), .max(max)) counterScanner(.clk(clk), .reset(reset), .enable(enable), .counter(counter));
 	
-	// asserting each row every 2Hz
-	//always_ff @(posedge clk, negedge reset)
-		//begin
-			//if(reset == 0) 
-					 //rowNum <= 2'b00;
-			//else if (counter == 5_999_999) rowNum <= rowNum + 1; // 
-		//end
-		
 	always_ff @(posedge clk) // , negedge reset
 		begin
 			// if (counter == 999_999) rowNum <= rowNum + 1; // 
@@ -39,18 +30,4 @@ module scanner #(parameter counterWidth = 25, parameter max = 8_999_999)
 				switchRight = 4'b1111;
 		end
 		
-	// assign switchRight = 4'b1111;
-	
-	 //Assert each row
-	// always_comb 
-	// 	case (rowNum) // checking which row is asserted
-	// 		2'b00:    switchRight = 4'b0001; // R0
-	// 		2'b01:    switchRight = 4'b0010; // R1
-	// 		2'b10:    switchRight = 4'b0100; // R2
-	// 		2'b11:    switchRight = 4'b1000; // R3
-	// 		default:  switchRight = 4'b1111; // R0
-	// 	endcase
-		
-	
-	
 endmodule
