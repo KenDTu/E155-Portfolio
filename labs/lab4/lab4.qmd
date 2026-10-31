@@ -36,10 +36,9 @@ The maximum error for a note is 0.03% which is well below the 1% error tolerance
 
 The source code for the project can be found in the associated [Github repository](https://github.com/KenDTu/E155-Portfolio).
 
-
 ::: {.callout-note collapse="true"}
 ## Figure 3: Lab 4 Schematic
-![Figure 3: Lab 4 STM32L432KC schematic with 8 ohm LM386 speaker](images/lab4schematic.png)
+![Figure 3: Lab 4 STM32L432KC schematic with 8 ohm LM386 speaker](images/schematic.png)
 :::
 
 <!-- ::: {.callout-note collapse="true"}
