@@ -100,18 +100,42 @@ If a more precise output frequency was desired, a more sophisticated counter cou
 
 The design met the specifications for the seven segment, the counter, and the on-board LED logic.
 
-
+::: {.callout-note collapse="true"}
+## Figure 4: Keypad and multiplexing seven-segment and keypad top module simulation square waves
+![Figure 4: Keypad and multiplexing top module simulation square waves](images/lab2_top_sims_keypad_and_multiplex.png)
+:::
 
 ::: {.callout-note collapse="true"}
-## Figure 4: QuestSim Simulation
-![Figure 4: QuestSim simulation square wave form](images/simulation.png)
+## Figure 4: Keypad and multiplexing top module simulation messages
+![Figure 4: Keypad and multiplexing top module simulation messages](images/top_module_sim_messages.png)
 :::
+
+::: {.callout-note collapse="true"}
+## Figure 4: Scanner module simulation square waves
+![Figure 4: Scanner top module simulation square waves](images/scanner_sim.png)
+:::
+
+::: {.callout-note collapse="true"}
+## Figure 4: Scanner module simulation messages
+![Figure 4: Scanner top module simulation messages](images/scanner_test_messages.png)
+:::
+
+::: {.callout-note collapse="true"}
+## Figure 4: Keypad Schematic
+![Figure 4: Keypad Schematic](images/keypad_schematic.png)
+:::
+
+::: {.callout-note collapse="true"}
+## Figure 4: Multiplexing Schematic
+![Figure 4: Multiplexing Schematic](images/multiplexing_schematic.png)
+:::
+
 
 ::: {.callout-note collapse="true"}
 ## Figure 5: Testbench
 ![Figure 5: QuestSim simulation showing the internal signals and passing LED test cases for the one line assign statements and the seven segment as well as the cases for the counter and enable functionality](images/test.png)
 :::
-
+lab2_keypad_schematic.png
 
 A few shortcomings of this project are not including the test cases for the counter reaching its max value and verification of internal signals for the top module. Other excellent specifications could be met such as verifying the reset, enable, and other top module behaviour such as the HSOSC and the connections. These I did not have enough time to work on given the many logisitical challenges I had with this project. 
 
