@@ -1,0 +1,35 @@
+# Pin assignments from Jacquard FPGA Studio.
+# Edit this file, or the pin table on the Build screen: they are two views of one thing.
+# Uploading the .zip this came in restores the pins, the board and the design top.
+# jacquard-board: upduino-v3.1
+# jacquard-top: lab2_ktu
+set_io -nowarn column[0] 9
+set_io -nowarn column[1] 44
+set_io -nowarn column[2] 3
+set_io -nowarn column[3] 45
+set_io -nowarn enable 43
+set_io -nowarn keyLead[0] 20
+set_io -nowarn keyLead[1] 12
+set_io -nowarn keyLead[2] 13
+set_io -nowarn keyLead[3] 18
+set_io -nowarn led[0] 28
+set_io -nowarn led[1] 38
+set_io -nowarn led[2] 42
+set_io -nowarn leftHex 26
+set_io -nowarn reset 34
+set_io -nowarn rightHex 10
+set_io -nowarn seg[0] 36
+set_io -nowarn seg[1] 6
+set_io -nowarn seg[2] 21
+set_io -nowarn seg[3] 11
+set_io -nowarn seg[4] 25
+set_io -nowarn seg[5] 19
+set_io -nowarn seg[6] 27
+set_io -nowarn switchLeft[0] 37
+set_io -nowarn switchLeft[1] 31
+set_io -nowarn switchLeft[2] 35
+set_io -nowarn switchLeft[3] 32
+set_io -nowarn switchRight[0] 2
+set_io -nowarn switchRight[1] 47
+set_io -nowarn switchRight[2] 48
+set_io -nowarn switchRight[3] 4
