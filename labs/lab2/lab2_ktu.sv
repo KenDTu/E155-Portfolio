@@ -1,7 +1,7 @@
 // Author: Ken Tu
 // Email: ktu@g.hmc.edu
 // Date of Creation: 09/20/2026
-// Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
+// Top Module to instantiate HSOSC, counter, seven-segment, and scanner module
 `timescale 1 ns/1 ps
 /* ======= PIN ASSIGNMENTS ==========
 leftHex = P46

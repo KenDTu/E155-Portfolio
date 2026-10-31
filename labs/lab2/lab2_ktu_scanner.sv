@@ -2,7 +2,6 @@
 // Email: ktu@g.hmc.edu
 // Date of Creation: 09/20/2026
 // Top Module to instantiate HSOSC, counter, and Seven Segment Decoder.
-`timescale 1 ns/1 ps
 /* ======= PIN ASSIGNMENTS ==========
 leftHex = P46
 rightHex = P45
@@ -20,7 +19,7 @@ seg[6], seg[5], seg[4], seg[3], seg[2], seg[1], seg[0]
 see iPad
 */
 
-
+`timescale 1 ns/1 ps
 // alter the counterWidth from 18 to 22
 // alter the max from 249_999 to 5_999_999
 module lab2_ktu #(parameter max = 5_999_999, parameter counterWidth = 24)
