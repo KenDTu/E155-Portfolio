@@ -13,7 +13,7 @@ For more details, check out [Lab 1](labs/lab1/lab1.qmd).
 
 ## Lab 2
 
-For more details, check out [Lab 2](labs/lab2/lab2.qmd). To be completed
+For more details, check out [Lab 2](labs/lab2/lab2.qmd). This is complete!! YAY!
 
 ## Lab 3
 
