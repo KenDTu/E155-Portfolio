@@ -61,8 +61,6 @@ module lab2_ktu #(parameter max = 5_999_999, parameter counterWidth = 24)
 	assign led[1] = switchLeft[3] && switchLeft[2];
 	assign led[2] = (counter < max/2);
 	
-	
-	// TODO: everything below is to turn on the scanner
 	// SCANNER
 	scanner scanner(.clk(int_osc), .reset(reset), .enable(enable), .switchRight(switchRight));
 	assign keyLead = ~column;
