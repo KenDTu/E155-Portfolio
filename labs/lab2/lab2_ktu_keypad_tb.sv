@@ -146,8 +146,6 @@ module lab2_ktu_tb ();
         else 
             $error("(16) FAILED! keyLead behaves based on column incorrectly at time: %0t.", $time);
 	
-
-	
 	    #100 $finish;
 	end	
 endmodule
