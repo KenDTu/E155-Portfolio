@@ -71,6 +71,7 @@ int main(void) {
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
     NVIC_EnableIRQ(EXTI3_IRQn);                      // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23) 
 
+
         // Check that the button was what triggered our interrupt
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))){
         // If so, clear the interrupt (NB: Write 1 to reset.)
@@ -88,8 +89,9 @@ int main(void) {
 
 }
 
-// EXTI lines 5-9 share this handler
-void EXTI9_5_IRQHandler(void){
+
+// EXTI line 2 use this handler
+void EXTI2_IRQHandler(void){
     // Check that the button was what triggered our interrupt
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))){
         // If so, clear the interrupt (NB: Write 1 to reset.)
@@ -97,9 +99,21 @@ void EXTI9_5_IRQHandler(void){
 
         // Then toggle the LED
         togglePin(LED_PIN);
-        // Write something to the terminal
-        printf("Hello");
-        
+    
+    }
+}
+
+// EXTI line 3 share this handler
+void EXT3_IRQHandler(void){
+    // Check that the button was what triggered our interrupt
+    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))){
+        // If so, clear the interrupt (NB: Write 1 to reset.)
+        EXTI->PR1 = (1 << gpioPinOffset(ENCODER_B));
+
+        // Then toggle the LED
+        togglePin(LED_PIN);        
 
     }
 }
+
+
