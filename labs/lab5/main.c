@@ -5,15 +5,23 @@
 
 #include "main.h"
 
-int main(void) {
-    // Enable LED as output
-    gpioEnable(GPIO_PORT_B);
-    pinMode(LED_PIN, GPIO_OUTPUT);
+// Define macros
 
-    // Enable button as input
+#define ENCODER_A PA5 // Encoders from the motor
+#define ENCODER_B PA8
+
+
+int main(void) {
+
+    // Enable PA5 as input
     gpioEnable(GPIO_PORT_A);
-    pinMode(BUTTON_PIN, GPIO_INPUT);
-    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(BUTTON_PIN)); // Set PA7 as pull-up (PUPD7 = 01)
+    pinMode(ENCODER_A, GPIO_INPUT);
+    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_A)); // Set PA5
+
+    // Enable PA8 as input
+    gpioEnable(GPIO_PORT_A);
+    pinMode(ENCODER_B, GPIO_INPUT);
+    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_B)); // Set PA8
 
     // Initialize timer
     RCC->APB1ENR1 |= (1 << 0); // TIM2EN
