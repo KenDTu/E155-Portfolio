@@ -20,6 +20,9 @@ int _write(int file, char *ptr, int len) {
   return len;
 }
 
+volatile uint32_t countA = 0;
+volatile uint32_t countB = 0;
+
 int main(void) {
 
     // Enable PA5 as input
@@ -32,6 +35,11 @@ int main(void) {
     pinMode(ENCODER_B, GPIO_INPUT);
     GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_B)); // Set PA8
 
+    // Enable PA10 as input
+    gpioEnable(GPIO_PORT_A);
+    pinMode(PA10, GPIO_OUTPUT);
+    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(PA10)); // Set PA8
+
     // Initialize timer
     RCC->APB1ENR1 |= (1 << 0); // TIM2EN
     initTIM(DELAY_TIM);
@@ -42,78 +50,48 @@ int main(void) {
     // 2. Configure EXTICR for the input button interrupt
 
     // Configure EXTICR for the input interrupt on ENCODER_A PA5 so external interrupts are mapped to respective encoder pins
-    SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR2_EXTI5);
+    SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5);
 
     // Configure EXTICR for the input interrupt on ENCODER_B PA8
-    SYSCFG->EXTICR[3] &= ~(SYSCFG_EXTICR3_EXTI8);
-
-    // Enable interrupts globally
-    __enable_irq();
-
-    // TODO: Delete the button stuff
-    // Configure interrupt for falling edge of GPIO pin for button
-    EXTI->IMR1 |= (1 << gpioPinOffset(BUTTON_PIN));   // 1. Configure mask bit
-    EXTI->RTSR1 &= ~(1 << gpioPinOffset(BUTTON_PIN)); // 2. Disable rising edge trigger
-    EXTI->FTSR1 |= (1 << gpioPinOffset(BUTTON_PIN));  // 3. Enable falling edge trigger
-    NVIC->ISER[0] |= (1 << 23);                       // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23)
+    SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR3_EXTI8);
 
     // Configure interrupt for falling edge of GPIO pin for ENCODER_A
     EXTI->IMR1 |= (1 << gpioPinOffset(ENCODER_A));   // 1. Configure mask bit
     EXTI->RTSR1 &= ~(1 << gpioPinOffset(ENCODER_A)); // 2. Disable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_A));  // 3. Enable falling edge trigger
-    NVIC_EnableIRQ(EXTI2_IRQn);                      // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23)
-
-    // TODO: Set up the NVIC enable. 
+    // NVIC_EnableIRQ(EXTI2_IRQn);                      // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23)
 
     // Configure interrupt for falling edge of GPIO pin for ENCODER_B
     EXTI->IMR1 |= (1 << gpioPinOffset(ENCODER_B));   // 1. Configure mask bit
     EXTI->RTSR1 &= ~(1 << gpioPinOffset(ENCODER_B)); // 2. Disable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
-    NVIC_EnableIRQ(EXTI3_IRQn);                      // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23) 
+    // NVIC_EnableIRQ(EXTI3_IRQn);                      // 4. Turn on EXTI interrupt in NVIC_ISER (EXTI9_5 is IRQ 23) 
+    NVIC_EnableIRQ(EXTI9_5_IRQn); // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
 
+    // Enable interrupts globally
+    __enable_irq();
 
-        // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))){
-        // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
-
-        // Then toggle the LED
-        togglePin(LED_PIN);
-        // Write something to the terminal
-        printf("Hello");
-    }
 
     while(1){
         delay_millis(DELAY_TIM, 200);
+        printf("%d, %d \n", countA, countB);
     }
-
 }
 
-
-// EXTI line 2 use this handler
-void EXTI2_IRQHandler(void){
-    // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))){
+void EXTI9_5_IRQHandler(void){
+    
+    // Check that our encoder was interrupted properlyy 
+    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {
         // If so, clear the interrupt (NB: Write 1 to reset.)
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
+        countA++;
 
-        // Then toggle the LED
-        togglePin(LED_PIN);
-    
     }
-}
 
-// EXTI line 3 share this handler
-void EXT3_IRQHandler(void){
-    // Check that the button was what triggered our interrupt
-    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))){
+    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))) {
         // If so, clear the interrupt (NB: Write 1 to reset.)
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_B));
-
-        // Then toggle the LED
-        togglePin(LED_PIN);        
-
+        countB++;
     }
+
 }
-
-
