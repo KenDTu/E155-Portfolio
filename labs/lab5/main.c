@@ -23,6 +23,10 @@ int _write(int file, char *ptr, int len) {
 volatile uint32_t countA = 0;
 volatile uint32_t countB = 0;
 
+void computeMotorSpeed(void) {
+  printf("\n join \n");
+}
+
 int main(void) {
 
     // Enable PA5 as input
@@ -75,7 +79,9 @@ int main(void) {
     while(1){
         delay_millis(DELAY_TIM, 200);
         printf("%d, %d \n", countA, countB);
+        computeMotorSpeed();
     }
+
 }
 
 void EXTI9_5_IRQHandler(void){
@@ -95,3 +101,4 @@ void EXTI9_5_IRQHandler(void){
     }
 
 }
+
