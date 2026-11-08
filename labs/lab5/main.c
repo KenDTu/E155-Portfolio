@@ -7,7 +7,7 @@
 
 // Define macros
 
-#define ENCODER_A PA6 // Encoders from the motor
+#define ENCODER_A PA5 // Encoders from the motor
 #define ENCODER_B PA8
 #define PPR 120       // Pulses per revolution from the 25GA-370 DC Motor
 #define CPR 4         // Count per revolution
@@ -64,8 +64,8 @@ int main(void) {
 
     // 2. Configure EXTICR for the input button interrupt
 
-    // Configure EXTICR for the input interrupt on ENCODER_A PA6 so external interrupts are mapped to respective encoder pins
-    SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI6);
+    // Configure EXTICR for the input interrupt on ENCODER_A 5 so external interrupts are mapped to respective encoder pins
+    SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5);
 
     // Configure EXTICR for the input interrupt on ENCODER_B PA8
     SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR3_EXTI8);
