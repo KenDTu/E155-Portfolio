@@ -16,6 +16,9 @@
 volatile uint32_t stateA = 0;
 volatile uint32_t stateB = 0;
 
+volatile uint32_t newA = 0;
+volatile uint32_t newB = 0;
+
 // Used to verify that the PC passes through the IRQ handler
 volatile uint32_t countA = 0;
 volatile uint32_t countB = 0;
@@ -36,19 +39,17 @@ void computeMotorSpeed(void) {
   printf("\n join \n");
 }
 
-int main(void) {
 
+void configureSystemClocks(void) {
     // Configures the system clock for the TIMERs
     configureFlash();
     configureClock();
 
     // 1. Enable SYSCFG clock domain in RCC
     RCC->APB2ENR |= (1 << 0); // SYSCFGEN
-    
 
-    // DO NOT USE INTERNAL PULL UP RESISTORS USE EXTERNAL PULL UPS
-
-    // Enable PA5/ NEW PIN e.g. PA9 as input
+}
+void setupInterrupt(void) {
     gpioEnable(GPIO_PORT_A);
     pinMode(ENCODER_A, GPIO_INPUT);
     //GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD10, 0b01); // Sets PA5 with pull-down resistor
@@ -97,6 +98,13 @@ int main(void) {
 
     delay_millis(DELAY_TIM, 1000);
 
+}
+
+int main(void) {
+
+    configureSystemClocks();
+    setupInterrupt();
+
     while(1){
         
         delay_millis(DELAY_TIM, 1000);
@@ -108,12 +116,22 @@ int main(void) {
 }
 
 void EXTI9_5_IRQHandler(void) {
+
+    // Finding the direction clockwise or counter-clockwise for the motor
+    newA = digitalRead(ENCODER_A);
+    newB = digitalRead(ENCODER_B);
+
+    if (digitalRead(ENCODER_A) && ~digitalRead(ENCODER_B)) {
+      printf("CLOCKWISE %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+    }
   
-    printf("%d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+
+  
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {   // PA9 → line 9
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
         countA++;
     }
+
 
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))) {   // PA8 → line 8
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_B));
