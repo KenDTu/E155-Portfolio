@@ -7,7 +7,7 @@
 
 // Define macros
 
-#define ENCODER_A PA9 // Encoders from the motor -- 15 to 10
+#define ENCODER_A PA10 // Encoders from the motor -- 15 to 10
 #define ENCODER_B PA8  //                         -- 5 to 9
 #define PPR 120       // Pulses per revolution from the 25GA-370 DC Motor
 #define CPR 4         // Count per revolution
@@ -74,7 +74,9 @@ int main(void) {
 
     // Configure EXTICR for the input interrupt on ENCODER_A 5 so external interrupts are mapped to respective encoder pins
     // SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5); // Turns on EXTI line for PA5
-    SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR3_EXTI9); // TODO: CHANGE THIS TO CHANGE PIN e.g. to PA9 which turns on EXTI line for another PA9
+    // SYSCFG->EXTICR[3] &= ~(SYSCFG_EXTICR3_EXTI9); // TODO: CHANGE THIS TO CHANGE PIN e.g. to PA9 which turns on EXTI line for another PA9
+    SYSCFG->EXTICR[2] &= ~(1 << 8 | 1 << 9 | 1 << 10); // TODO:from Sadhvi enable external interrupt for pin 10 fr
+
     // SYSCFG->EXTICR[1] |= _VAL2FLD(SYSCFG_EXTICR2_EXTI5, 0b000);
 
     // Configure EXTICR for the input interrupt on ENCODER_B PA8
@@ -90,12 +92,19 @@ int main(void) {
     EXTI->RTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 2. Enable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
 
-    NVIC_EnableIRQ(EXTI9_5_IRQn);   // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
-    NVIC_EnableIRQ(EXTI15_10_IRQn);
-  
-    // Enable interrupts globally
+        // Enable interrupts globally
     __enable_irq();
 
+    NVIC_EnableIRQ(EXTI9_5_IRQn);   // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
+    NVIC_EnableIRQ(EXTI15_10_IRQn);
+
+    // Setting priorities manually.
+    __NVIC_SetPriority(EXTI9_5_IRQn, 1);
+    __NVIC_SetPriority(EXTI15_10_IRQn, 1);
+
+    delay_millis(DELAY_TIM, 1000);
+
+  
     // ============= Explict section from Quinn can IGNORE FOR THE TIME BEING ===============
     // RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN; // SYSCFGEN
 
@@ -116,8 +125,11 @@ int main(void) {
     
     int count = 0;
     while(1){
+        
         delay_millis(DELAY_TIM, 200);
-        printf("%d: ENCODER_A: %d, countA: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+        // printf("%d \n", digitalRead(ENCODER_A));
+        //printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
+        printf("%d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
         count++;
     }
 }
@@ -125,12 +137,12 @@ int main(void) {
 // ENCODER_B
 void EXTI9_5_IRQHandler(void){
 
-    // Check that our ENCODER_A was interrupted properly and clear the interrupt flags
-    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {
-        // If so, clear the interrupt (NB: Write 1 to reset.)
-        EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
-        countA++;
-    }
+    //// Check that our ENCODER_A was interrupted properly and clear the interrupt flags
+    //if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {
+    //    // If so, clear the interrupt (NB: Write 1 to reset.)
+    //    EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
+    //    countA++;
+    //}
     
     // Check that our ENCODER_B was interrupted properly and clear the interrupt flags
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))) {
@@ -139,6 +151,19 @@ void EXTI9_5_IRQHandler(void){
         countB++;
     }
 
+}
+
+
+// ENCODER_A
+void EXTI15_10_IRQHandler(void){
+
+    // Check that our encoder was interrupted properly and clear the interrupt flags
+    if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {
+        // If so, clear the interrupt (NB: Write 1 to reset.)
+        // EXTI->PR1 |= _VAL2FLD(EXTI_PR1_PIF10, 1);
+        EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
+        countA++;
+    }
 }
 
 // ================ ENABLER 15 to 10 EXIT IRQ HANDLER FROM QUINN -- IGNORE ============
