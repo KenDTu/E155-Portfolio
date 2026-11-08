@@ -126,7 +126,7 @@ int main(void) {
     int count = 0;
     while(1){
         
-        delay_millis(DELAY_TIM, 200);
+        delay_millis(DELAY_TIM, 1000);
         // printf("%d \n", digitalRead(ENCODER_A));
         //printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
         printf("%d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
