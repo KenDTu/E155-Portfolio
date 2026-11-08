@@ -7,7 +7,7 @@
 
 // Define macros
 
-#define ENCODER_A PA5 // Encoders from the motor -- 15 to 10
+#define ENCODER_A PA9 // Encoders from the motor -- 15 to 10
 #define ENCODER_B PA8  //                         -- 5 to 9
 #define PPR 120       // Pulses per revolution from the 25GA-370 DC Motor
 #define CPR 4         // Count per revolution
@@ -53,7 +53,7 @@ int main(void) {
     // 1. Enable SYSCFG clock domain in RCC
     RCC->APB2ENR |= (1 << 0); // SYSCFGEN
 
-    // Enable PA5 as input
+    // Enable PA5/ NEW PIN e.g. PA9 as input
     gpioEnable(GPIO_PORT_A);
     pinMode(ENCODER_A, GPIO_INPUT);
     encoderPinInit(ENCODER_A); // configuring to set pin with pull-up enabled
@@ -62,7 +62,7 @@ int main(void) {
 
     // Enable PA8 as input
     pinMode(ENCODER_B, GPIO_INPUT);
-    encoderPinInit(ENCODER_A); // configuring to set pin with pull-up enabled
+    encoderPinInit(ENCODER_B); // configuring to set pin with pull-up enabled
     //GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD8, 0b01); // Sets PA8 with pull-down resistor
     //GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_B)); // Set PA8
 
@@ -73,7 +73,8 @@ int main(void) {
     // 2. Configure EXTICR for the input button interrupt
 
     // Configure EXTICR for the input interrupt on ENCODER_A 5 so external interrupts are mapped to respective encoder pins
-    SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5);
+    // SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5); // Turns on EXTI line for PA5
+    SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR3_EXTI9); // TODO: CHANGE THIS TO CHANGE PIN e.g. to PA9 which turns on EXTI line for another PA9
     // SYSCFG->EXTICR[1] |= _VAL2FLD(SYSCFG_EXTICR2_EXTI5, 0b000);
 
     // Configure EXTICR for the input interrupt on ENCODER_B PA8
@@ -90,6 +91,7 @@ int main(void) {
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
 
     NVIC_EnableIRQ(EXTI9_5_IRQn);   // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
+    NVIC_EnableIRQ(EXTI15_10_IRQn);
   
     // Enable interrupts globally
     __enable_irq();
