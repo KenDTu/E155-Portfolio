@@ -135,6 +135,9 @@ int main(void) {
 }
 
 void EXTI9_5_IRQHandler(void) {
+
+    printf("MODER=%08lx PUPDR=%08lx AFRH=%08lx EXTICR3=%08lx CFGR=%08lx\n", GPIOA->MODER, GPIOA->PUPDR, GPIOA->AFR[1], SYSCFG->EXTICR[2], RCC->CFGR);
+
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {   // PA9 → line 9
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
         countA++;
