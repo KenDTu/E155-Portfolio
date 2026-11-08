@@ -1,7 +1,8 @@
 // main.h
-// Josh Brake
-// jbrake@hmc.edu
-// 10/31/22
+// Aabhas Senapati
+// asenapati@hmc.edu
+// 09/10/25
+// Header File defining the rotary encoder inputs, pulse per revolution, and the output pin
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -12,9 +13,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Custom defines
 ///////////////////////////////////////////////////////////////////////////////
-
 #define LED_PIN PB3
-#define BUTTON_PIN PA7
-#define DELAY_TIM TIM2
+#define ENCODER_A_PIN PB6
+#define ENCODER_B_PIN PB7
+#define PULSES_PER_REV 408 
 
 #endif // MAIN_H
