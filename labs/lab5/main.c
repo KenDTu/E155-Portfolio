@@ -32,6 +32,12 @@ volatile int totalCount = 0;
 // Used to show the line number on the terminal
 int count = 0;
 
+// Used velocity for motor
+float velocity = 0;
+
+// Used to calculate number of peaks on quad encoder
+float positionCount = 0;
+
 // Function used by printf to send characters to the laptop
 int _write(int file, char *ptr, int len) {
   int i = 0;
@@ -89,47 +95,48 @@ void setupInterrupt(void) {
     EXTI->RTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 2. Enable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
 
-        // Enable interrupts globally
+
+    // ============== TIMER SETUP ===================
+    initTIM(DELAY_TIM);
+    // RCC->APB1ENR1 |= (1 << 0); // TIM2EN
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
+    
+    // With an interrupt to measure 1 second of time for the pulse/s the s value
+    TIM2->DIER |= (1 << 6); // Trigger interrupt enable
+    TIM2->DIER |= (1 << 0); // Update interrupt enable
+    TIM2->SR &= ~(1 << 0); // Resets the interrupt flag
+
+
+    // Enable interrupts globally
     __enable_irq();
 
-    NVIC_EnableIRQ(EXTI9_5_IRQn);   // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
-    // NVIC_EnableIRQ(EXTI15_10_IRQn);
+    __NVIC_EnableIRQ(EXTI9_5_IRQn);         // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
+    __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn); // 
 
     // Setting priorities manually.
     __NVIC_SetPriority(EXTI9_5_IRQn, 1);
-    // __NVIC_SetPriority(EXTI15_10_IRQn, 1);
+    __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 2);
 
-    delay_millis(DELAY_TIM, 1000);
+    
 }
 
 
-void startTimer(void) {
-    // Initialize timer
-    RCC->APB1ENR1 |= (1 << 0); // TIM2EN
-    initTIM(DELAY_TIM);
-
-    // With an interrupt to measure 1 second of time for the pulse/s the s value
-    TIM2->DIER |= (1 << 0); 
-    TIM2->SR &= ~(1 << 0); // Updating the interrupt flag
-    __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn);
-    __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 1);
-
-}
 
 
 int main(void) {
 
     configureSystemClocks();
     setupInterrupt();
-    startTimer();
 
+    delay_millis(DELAY_TIM, 1000);
+    
     while(1){
         
-        delay_millis(DELAY_TIM, 1000);
+        // delay_millis(DELAY_TIM, 1000);
         // printf("%d \n", digitalRead(ENCODER_A));
         //printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
         
-        count++;
+        // count++;
     }
 }
 
@@ -137,12 +144,7 @@ void EXTI9_5_IRQHandler(void) {
 
     // Finding the direction clockwise or counter-clockwise for the motor
     newA = digitalRead(ENCODER_A);
-    newB = digitalRead(ENCODER_B);
-
-    if (digitalRead(ENCODER_A) && ~digitalRead(ENCODER_B)) {
-      printf("%d: DIRECTION: %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
-    }
-    
+    newB = digitalRead(ENCODER_B); 
   
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {   // PA9 → line 9
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
@@ -173,4 +175,19 @@ void EXTI9_5_IRQHandler(void) {
         }
         countB++;
     }
+
+    positionCount++; // TODO: Double cheeck
 }
+
+void TIM1_UP_TIM16_IRQHandler(void) {
+  if (TIM2->SR & (1 << 0)) {
+    TIM2->SR &= ~(1 << 0); // Resets the interrupt flag
+    printf("test");
+    // velocity = (float)positionCount / (4 * PPR);
+    // printf(": Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+    TIM2->CNT = 0;
+  }
+
+
+}
+
