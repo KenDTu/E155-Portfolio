@@ -65,24 +65,10 @@ void configureSystemClocks(void) {
 void setupInterrupt(void) {
     gpioEnable(GPIO_PORT_A);
     pinMode(ENCODER_A, GPIO_INPUT);
-    //GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD10, 0b01); // Sets PA5 with pull-down resistor
-    //GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_A)); // Set PA5
 
     // Enable PA8 as input
     pinMode(ENCODER_B, GPIO_INPUT);
-    //GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD8, 0b01); // Sets PA8 with pull-down resistor
-    //GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_B)); // Set PA8
 
-
-    // 2. Configure EXTICR for the input button interrupt
-    // Configure EXTICR for the input interrupt on ENCODER_A 5 so external interrupts are mapped to respective encoder pins
-    // SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5); // Turns on EXTI line for PA5
-    //SYSCFG->EXTICR[3] &= ~(SYSCFG_EXTICR3_EXTI9); // TODO: CHANGE THIS TO CHANGE PIN e.g. to PA9 which turns on EXTI line for another PA9
-    SYSCFG->EXTICR[2] &= ~(1 << 4 | 1 << 5 | 1 << 6); // TODO:from Sadhvi enable external interrupt for pin 9 fr
-
-    // SYSCFG->EXTICR[1] |= _VAL2FLD(SYSCFG_EXTICR2_EXTI5, 0b000);
-
-    // Configure EXTICR for the input interrupt on ENCODER_B PA8
     SYSCFG->EXTICR[2] &= ~(SYSCFG_EXTICR3_EXTI8);
 
     // Configure interrupt for falling and rising edge of GPIO pin for ENCODER_A
@@ -105,23 +91,12 @@ void setupInterrupt(void) {
     __NVIC_SetPriority(EXTI9_5_IRQn, 1);
     // __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 2);
 
-    
 }
 
 void setupTimer(void) {
     // ============== TIMER SETUP ===================
-    //initTIM16(DELAY_TIM);
     initTIM(TIM2); // TIM2
-    // RCC->APB1ENR1 |= (1 << 0); // TIM2EN
-    // RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN; // TIM2
-    // RCC->APB2ENR |= RCC_APB2ENR_TIM16EN; // TIM16
-
-    
-    // With an interrupt to measure 1 second of time for the pulse/s the s value
-    //TIM16->DIER |= (1 << 6); // Trigger interrupt enable
-    //TIM16->DIER |= (1 << 0); // Update interrupt enable
-    //TIM16->SR &= ~(1 << 0); // Resets the interrupt flag
-
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN; // TIM2
 
 }
 
@@ -131,26 +106,16 @@ int main(void) {
     setupInterrupt();
     setupTimer();
 
-    delay_millis(TIM2, 200);
+    delay_millis(TIM2, 100);
 
     while(1){
 
         delay_millis(TIM2, timer); // 2Hz delay or 500ms
         float d = positionCount;
         positionCount = 0;
-        // printf("%f, %f \n", positionCount, d);
-        //printf("d: %f, positionCount: %f -- %d: Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", d, positionCount, count, velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
         velocity = (float)(d * (1000/timer)) / (4 * PPR);
         printf("Motor velocity (rev/s): %f \n", velocity);
-        //printf("%d: %f \n", count, velocity);
-        //// printf(": Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", velocity*direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
-        //// printf("%d \n", digitalRead(ENCODER_A));
-        ////printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
-        //count++;
-        
-        //if (TIM16->SR & ~(1 << 0)) {
-        //  positionCount = 0;
-        //}
+
     }
 }
 
@@ -175,7 +140,6 @@ void EXTI9_5_IRQHandler(void) {
         positionCount+=direction;
     }
 
-
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))) {   // PA8 → line 8
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_B));
         if (newA == 1 && newB == 1) {
@@ -191,19 +155,6 @@ void EXTI9_5_IRQHandler(void) {
         positionCount+=direction;
     }
 
-    
     count++;
-}
-
-void TIM1_UP_TIM16_IRQHandler(void) {
-  if (TIM2->SR & (1 << 0)) {
-    TIM2->SR &= ~(1 << 0); // Resets the interrupt flag
-    printf("test");
-    // velocity = (float)positionCount / (4 * PPR);
-    // printf(": Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
-    TIM2->CNT = 0;
-  }
-
-
 }
 

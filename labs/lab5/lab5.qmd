@@ -10,7 +10,7 @@ listing:
 <!-- This is how you write a comment in your .qmd file -->
 ## Introduction
 
-In this lab, I used my MCU to determine the speed of a motor by reading from a quadrature encoder using interrupts.
+In this lab, I used my MCU to determine the velocity of a motor in (rev/s) by reading from a quadrature encoder using interrupts. An interrupts is a hardware or software signal that temporarily halts the processor's current execution flow so it can immediately handle a high-priority event or requests. Our case, the MCU executes an interrupts and interrupt service routine  each time the encoder changes 
 
 ## Design and Testing Methodology
 

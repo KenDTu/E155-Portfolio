@@ -25,7 +25,7 @@ For more details, check out [Lab 4](labs/lab4/lab4.qmd). This is complete!! YAY!
 
 ## Lab 5
 
-For more details, check out [Lab 4](labs/lab4/lab4.qmd). to be completed!!
+For more details, check out [Lab 5](labs/lab5/lab5.qmd). to be completed!!
 
 ## Lab 6
 
