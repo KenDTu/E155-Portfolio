@@ -23,6 +23,13 @@ volatile uint32_t newB = 0;
 volatile uint32_t countA = 0;
 volatile uint32_t countB = 0;
 
+// Used to indicate CW or CCW with default CW = 1
+volatile int direction = 1;
+
+// With an interrupt to measure 1 second of time for the pulse/s the s value
+volatile int totalCount = 0;
+
+// Used to show the line number on the terminal
 int count = 0;
 
 // Function used by printf to send characters to the laptop
@@ -60,12 +67,8 @@ void setupInterrupt(void) {
     //GPIOA->PUPDR |= _VAL2FLD(GPIO_PUPDR_PUPD8, 0b01); // Sets PA8 with pull-down resistor
     //GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENCODER_B)); // Set PA8
 
-    // Initialize timer
-    RCC->APB1ENR1 |= (1 << 0); // TIM2EN
-    initTIM(DELAY_TIM);
 
     // 2. Configure EXTICR for the input button interrupt
-
     // Configure EXTICR for the input interrupt on ENCODER_A 5 so external interrupts are mapped to respective encoder pins
     // SYSCFG->EXTICR[1] &= ~(SYSCFG_EXTICR2_EXTI5); // Turns on EXTI line for PA5
     //SYSCFG->EXTICR[3] &= ~(SYSCFG_EXTICR3_EXTI9); // TODO: CHANGE THIS TO CHANGE PIN e.g. to PA9 which turns on EXTI line for another PA9
@@ -97,13 +100,28 @@ void setupInterrupt(void) {
     // __NVIC_SetPriority(EXTI15_10_IRQn, 1);
 
     delay_millis(DELAY_TIM, 1000);
+}
+
+
+void startTimer(void) {
+    // Initialize timer
+    RCC->APB1ENR1 |= (1 << 0); // TIM2EN
+    initTIM(DELAY_TIM);
+
+    // With an interrupt to measure 1 second of time for the pulse/s the s value
+    TIM2->DIER |= (1 << 0); 
+    TIM2->SR &= ~(1 << 0); // Updating the interrupt flag
+    __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn);
+    __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 1);
 
 }
+
 
 int main(void) {
 
     configureSystemClocks();
     setupInterrupt();
+    startTimer();
 
     while(1){
         
@@ -122,19 +140,37 @@ void EXTI9_5_IRQHandler(void) {
     newB = digitalRead(ENCODER_B);
 
     if (digitalRead(ENCODER_A) && ~digitalRead(ENCODER_B)) {
-      printf("CLOCKWISE %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+      printf("%d: DIRECTION: %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", count, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
     }
-  
-
+    
   
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_A))) {   // PA9 → line 9
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_A));
+        if (newA == 1 && newB == 1) {
+          direction = -1;
+        } else if (newA == 0 && newB == 0) {
+          direction = -1;
+        } else if (newA == 1 && newB == 0) {
+          direction = 1;
+        } else if (newA == 0 && newB == 1) {
+          direction = 1;
+        } 
+
         countA++;
     }
 
 
     if (EXTI->PR1 & (1 << gpioPinOffset(ENCODER_B))) {   // PA8 → line 8
         EXTI->PR1 = (1 << gpioPinOffset(ENCODER_B));
+        if (newA == 1 && newB == 1) {
+          direction = 1;
+        } else if (newA == 0 && newB == 0) {
+          direction = 1;
+        } else if (newA == 1 && newB == 0) {
+          direction = -1;
+        } else if (newA == 0 && newB == 1) {
+          direction = -1;
+        }
         countB++;
     }
 }
