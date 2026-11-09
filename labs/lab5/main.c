@@ -131,28 +131,17 @@ int main(void) {
     setupInterrupt();
     setupTimer();
 
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-
-
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
-    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 200);
 
     while(1){
 
-        delay_millis(TIM2, timer); // 2Hz delay
+        delay_millis(TIM2, timer); // 2Hz delay or 500ms
         float d = positionCount;
         positionCount = 0;
-        printf("%f, %f \n", positionCount, d);
-        // printf("d: %f, positionCount: %f -- %d: Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", d, positionCount, count, velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+        // printf("%f, %f \n", positionCount, d);
+        //printf("d: %f, positionCount: %f -- %d: Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", d, positionCount, count, velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
         velocity = (float)(d * (1000/timer)) / (4 * PPR);
-        
+        printf("Motor velocity (rev/s): %f \n", velocity);
         //printf("%d: %f \n", count, velocity);
         //// printf(": Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", velocity*direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
         //// printf("%d \n", digitalRead(ENCODER_A));
