@@ -4,6 +4,7 @@
 // 11/06/2026
 
 #include "main.h"
+#include "STM32L432KC_TIM16.h"
 
 // Define macros
 
@@ -30,13 +31,15 @@ volatile int direction = 1;
 volatile int totalCount = 0;
 
 // Used to show the line number on the terminal
-int count = 0;
+volatile int count = 0;
 
 // Used velocity for motor
-float velocity = 0;
+volatile float velocity = 0;
 
 // Used to calculate number of peaks on quad encoder
-float positionCount = 0;
+volatile float positionCount = 0;
+
+volatile int32_t timer = 500;
 
 // Function used by printf to send characters to the laptop
 int _write(int file, char *ptr, int len) {
@@ -47,19 +50,16 @@ int _write(int file, char *ptr, int len) {
   return len;
 }
 
-
-void computeMotorSpeed(void) {
-  printf("\n join \n");
-}
-
-
 void configureSystemClocks(void) {
     // Configures the system clock for the TIMERs
     configureFlash();
-    configureClock();
+    // configureClock();
+    // select 4HMz as the clock for TIM2
 
     // 1. Enable SYSCFG clock domain in RCC
-    RCC->APB2ENR |= (1 << 0); // SYSCFGEN
+    // RCC->APB1ENR1 |= (1 << 0); // SYSCFGEN
+    // RCC->APB1ENR1 |= (1 << 0); // TIM2EN
+    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN; // TIM2
 
 }
 void setupInterrupt(void) {
@@ -95,48 +95,73 @@ void setupInterrupt(void) {
     EXTI->RTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 2. Enable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
 
-
-    // ============== TIMER SETUP ===================
-    initTIM(DELAY_TIM);
-    // RCC->APB1ENR1 |= (1 << 0); // TIM2EN
-    RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
-    
-    // With an interrupt to measure 1 second of time for the pulse/s the s value
-    TIM2->DIER |= (1 << 6); // Trigger interrupt enable
-    TIM2->DIER |= (1 << 0); // Update interrupt enable
-    TIM2->SR &= ~(1 << 0); // Resets the interrupt flag
-
-
     // Enable interrupts globally
     __enable_irq();
 
     __NVIC_EnableIRQ(EXTI9_5_IRQn);         // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
-    __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn); // 
+    // __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn); // 
 
     // Setting priorities manually.
     __NVIC_SetPriority(EXTI9_5_IRQn, 1);
-    __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 2);
+    // __NVIC_SetPriority(TIM1_UP_TIM16_IRQn, 2);
 
     
 }
 
+void setupTimer(void) {
+    // ============== TIMER SETUP ===================
+    //initTIM16(DELAY_TIM);
+    initTIM(TIM2); // TIM2
+    // RCC->APB1ENR1 |= (1 << 0); // TIM2EN
+    // RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN; // TIM2
+    // RCC->APB2ENR |= RCC_APB2ENR_TIM16EN; // TIM16
+
+    
+    // With an interrupt to measure 1 second of time for the pulse/s the s value
+    //TIM16->DIER |= (1 << 6); // Trigger interrupt enable
+    //TIM16->DIER |= (1 << 0); // Update interrupt enable
+    //TIM16->SR &= ~(1 << 0); // Resets the interrupt flag
 
 
+}
 
 int main(void) {
 
     configureSystemClocks();
     setupInterrupt();
+    setupTimer();
 
-    delay_millis(DELAY_TIM, 1000);
-    
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+
+
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+    delay_millis(TIM2, 1000);
+
     while(1){
+
+        delay_millis(TIM2, timer); // 2Hz delay
+        float d = positionCount;
+        positionCount = 0;
+        printf("%f, %f \n", positionCount, d);
+        // printf("d: %f, positionCount: %f -- %d: Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", d, positionCount, count, velocity, direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+        velocity = (float)(d * (1000/timer)) / (4 * PPR);
         
-        // delay_millis(DELAY_TIM, 1000);
-        // printf("%d \n", digitalRead(ENCODER_A));
-        //printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
+        //printf("%d: %f \n", count, velocity);
+        //// printf(": Velocity (Includes Direction): %f %d: countA: %d, ENCODER_A: %d, countB: %d, ENCODER_B %d \n", velocity*direction, countA, digitalRead(ENCODER_A) , countB , digitalRead(ENCODER_B));
+        //// printf("%d \n", digitalRead(ENCODER_A));
+        ////printf("%d: ENCODER_A: %d, countA: %d \n", count, countA, digitalRead(ENCODER_A));
+        //count++;
         
-        // count++;
+        //if (TIM16->SR & ~(1 << 0)) {
+        //  positionCount = 0;
+        //}
     }
 }
 
@@ -157,8 +182,8 @@ void EXTI9_5_IRQHandler(void) {
         } else if (newA == 0 && newB == 1) {
           direction = 1;
         } 
-
         countA++;
+        positionCount+=direction;
     }
 
 
@@ -174,9 +199,11 @@ void EXTI9_5_IRQHandler(void) {
           direction = -1;
         }
         countB++;
+        positionCount+=direction;
     }
 
-    positionCount++; // TODO: Double cheeck
+    
+    count++;
 }
 
 void TIM1_UP_TIM16_IRQHandler(void) {
