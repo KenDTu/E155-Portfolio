@@ -81,9 +81,6 @@ void setupInterrupt(void) {
     EXTI->RTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 2. Enable rising edge trigger
     EXTI->FTSR1 |= (1 << gpioPinOffset(ENCODER_B));  // 3. Enable falling edge trigger
 
-    // Enable interrupts globally
-    __enable_irq();
-
     __NVIC_EnableIRQ(EXTI9_5_IRQn);         // Turn on EXTI interrupt for lineEXTI lines 5 to 9.
     // __NVIC_EnableIRQ(TIM1_UP_TIM16_IRQn); // 
 
@@ -105,6 +102,8 @@ int main(void) {
     configureSystemClocks();
     setupInterrupt();
     setupTimer();
+    // Enable interrupts globally
+    __enable_irq();
 
     delay_millis(TIM2, 100);
 

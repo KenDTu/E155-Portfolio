@@ -28,6 +28,7 @@ I chose pins `PA8` and `PA9` to be my GPIO input to cause the interrupt activate
 
 Within the velocity calculation line, we use delayed of 2Hz or 500ms to meet the specification of updating the velocity to at least a rate of 1Hz. Hence we satisfy the criterion there. We divide by a factor of four because each rising and falling edge of `ENCODER_A` and `ENCODER_B` provide an additional count to divide. 
 
+The clock-wise and counter-clockwise rotation are 
 [explanation here of how the CW and CCW rotations are calculated]
 
 ## Technical Documentation
